@@ -6,34 +6,13 @@
 //
 
 import Foundation
-class EdgeCalculator {
+/// Everything we need to create the edge shapes
+public class EdgeCalculator {
     
-    
-    static func edgeToShape(wordList: [String], edges:[EdgeModel]) -> [ShapeModel] {
-        var result: [ShapeModel] = []
-        result.reserveCapacity(edges.count)
-        
-        for edge in edges {
-            let word1 = wordList[Int(edge.word1)]
-            let word2 = wordList[edge.word2]
-            
-            let width = UInt8(word1.count) + 2
-            let height = UInt8(word2.count) + 2
-            
-            let shape = ShapeModel(
-                width:width,
-                height:height,
-                wordIdArray:[UInt8(edge.word1), UInt8(edge.word2)],
-                wordOrientationArray: [true, false],
-                xStartArray:[0 ,edge.letterPosition1 + 1],
-                yStartArray:[edge.letterPosition2 + 1, 0]
-            )
-            result.append(shape)
-        }
-        return result
-    }
-    
-    static func findEdges(wordList: [String]) -> [EdgeModel] {
+    /// Finds all edges found within an array of words
+    /// - Parameter wordList: A list of words
+    /// - Returns: A list of valid edges
+    public static func findEdges(fromWordList wordList: [String]) -> [EdgeModel] {
         let wordListSize = wordList.count
         
         var result: [EdgeModel] = []
@@ -68,8 +47,8 @@ class EdgeCalculator {
                                 else {
                                     
                                     result.append(EdgeModel(
-                                            word1: wordId1,
-                                        letterPosition1: UInt8(letterPosition1), word2: wordId2,
+                                            word1: UInt8(wordId1),
+                                        letterPosition1: UInt8(letterPosition1), word2: UInt8(wordId2),
                                         letterPosition2: UInt8(letterPosition2)))
                                 }
                             }
@@ -78,6 +57,6 @@ class EdgeCalculator {
                 }
             }
         }
-        return result;
-    };
+        return result
+    }
 }
