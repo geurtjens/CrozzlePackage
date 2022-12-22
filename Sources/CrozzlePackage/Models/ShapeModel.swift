@@ -20,5 +20,6 @@ public struct ShapeModel {
 
     /// The words and how they should be placed into the grid according to the local coordinate system of the shape
     public let placements: [PlacementModel]
+    
 }
 

@@ -19,7 +19,28 @@ public class DrawShape {
         
         var result = getInitialShape(width: shape.width, height: shape.height)
         // Then we place each character and convert the array into a string somehow
-        for placement in shape.placements {
+        
+        let horizontalPlacements = shape.placements.filter { $0.isHorizontal == true}
+        let verticalPlacements = shape.placements.filter {$0.isHorizontal == false}
+        for placement in horizontalPlacements {
+            
+            let startingLocation = getLocation(
+                x: placement.x,
+                y: placement.y,
+                width: shape.width)
+            
+            
+            result[startingLocation] = "."
+            
+            let word = wordList[Int(placement.id)]
+            
+            for i in 0..<word.count {
+                let location = startingLocation + i + 1
+                result[location] = word[i]
+            }
+            result[startingLocation + word.count + 1] = "."
+        }
+        for placement in verticalPlacements {
             
             let startingLocation = getLocation(
                 x: placement.x,
@@ -29,29 +50,21 @@ public class DrawShape {
             result[startingLocation] = "."
             
             let word = wordList[Int(placement.id)]
-            
-            if placement.isHorizontal {
-                
-                for i in 0..<word.count {
-                    let location = startingLocation + i + 1
-                    result[location] = word[i]
-                }
-                result[startingLocation + word.count + 1] = "."
-            } else {
-                for i in 0..<word.count {
-                    let location = getLocation(
-                        x: placement.x,
-                        y: placement.y + UInt8(i) + 1,
-                        width: shape.width)
-                    result[location] = word[i]
-                }
-                let lastLocation = getLocation(
+            for i in 0..<word.count {
+                let location = getLocation(
                     x: placement.x,
-                    y: placement.y + UInt8(word.count + 1),
+                    y: placement.y + UInt8(i) + 1,
                     width: shape.width)
+                result[location] = word[i]
+            
                 
-                result[lastLocation] = "."
             }
+            let lastLocation = getLocation(
+                x: placement.x,
+                y: placement.y + UInt8(word.count + 1),
+                width: shape.width)
+            
+            result[lastLocation] = "."
         }
 
         return String(result)

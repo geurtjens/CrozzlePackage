@@ -16,6 +16,14 @@ public class ScoreCalculator {
         return score(forLetter: letter) + 20
     }
     
+    public static func score(word: String) -> Int {
+        var result = 0
+        for letter in word {
+            result += score(forLetter: letter)
+        }
+        return result
+    }
+    
     /// Score of one interlocked letter.  Always pass in a capital letter.
     /// - Parameter letter: A letter from "A" to "Z" which was interlocked
     /// - Returns: The score for interlocking that letter
