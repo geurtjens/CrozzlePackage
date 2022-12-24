@@ -114,7 +114,7 @@ public class ToShape {
                     startX[wordPos] = leadingWidth
                 case.outer:
                     let startPos = cluster.outerStart[wordPos]
-                    startX[wordPos] = UInt8(leadingWidth - overlap + UInt8(startPos))
+                    startX[wordPos] = UInt8(leadingWidth + UInt8(startPos) - overlap )
                 }
                 startY[wordPos] = leadingHeight + UInt8(i) + 1 // We need plus 1 to account for the blocking character .
             }

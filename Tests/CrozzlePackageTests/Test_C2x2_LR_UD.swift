@@ -21,7 +21,7 @@ final class Test_C2x2_LR_UD: XCTestCase {
         let wordList = WordListExamples.getWordList()
         let wordModel = WordModelSOA(words: wordList)
         
-        let cluster = C2x2_LR_UD.Execute(W: wordModel)
+        let cluster = C2x2_LR_UD.Execute(W: wordModel, wordCount: wordList.count)
         
         let shapes = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         
@@ -31,7 +31,7 @@ final class Test_C2x2_LR_UD: XCTestCase {
         
         let wordModel = WordModelSOA(words: wordList)
         
-        let result = C2x2_LR_UD.Execute(W: wordModel)
+        let result = C2x2_LR_UD.Execute(W: wordModel, wordCount: wordList.count)
         
         let shapes = ToShape.from(cluster: result, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 13)
         
@@ -45,7 +45,7 @@ final class Test_C2x2_LR_UD: XCTestCase {
         
         let wordModel = WordModelSOA(words: wordList)
         
-        let result = C2x2_LR_UD.Execute(W: wordModel)
+        let result = C2x2_LR_UD.Execute(W: wordModel, wordCount: wordList.count)
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         // Any test you write for XCTest can be annotated as throws and async.

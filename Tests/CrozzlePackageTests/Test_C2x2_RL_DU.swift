@@ -24,7 +24,7 @@ final class Test_C2x2_RL_DU: XCTestCase {
         let wordList = WordListExamples.getWordList()
         let wordModel = WordModelSOA(words: wordList)
         
-        let cluster = C2x2_RL_DU.Execute(W: wordModel)
+        let cluster = C2x2_RL_DU.Execute(W: wordModel, wordCount: wordList.count)
         
         let shapes = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         
@@ -36,7 +36,7 @@ final class Test_C2x2_RL_DU: XCTestCase {
         let wordList = WordListExamples.getWordList()
         let wordModel = WordModelSOA(words: wordList)
         
-        let cluster = C2x2_RL_DU.Execute(W: wordModel)
+        let cluster = C2x2_RL_DU.Execute(W: wordModel, wordCount: wordList.count)
         
         
         let shapes = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
