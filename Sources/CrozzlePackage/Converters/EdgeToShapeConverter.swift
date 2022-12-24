@@ -14,7 +14,7 @@ public class EdgeToShapeConverter {
     ///   - edges: Edges are a valid set of shapes combined at one letter
     ///   - wordList: A set of words used when we calculated the edges
     /// - Returns: An array of ShapeModels which is a standard structure to represent any valid crozzle game or shape
-    public static func toShape(fromEdges edges: [EdgeModel], usingWords wordList: [String]) -> [ShapeModel] {
+    public static func toShape(fromEdges edges: [EdgeModel], usingWords wordList: [String], scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel] {
         var result: [ShapeModel] = []
         result.reserveCapacity(edges.count)
         
@@ -26,24 +26,27 @@ public class EdgeToShapeConverter {
             let height = UInt8(word2.count) + 2
             let score = ScoreCalculator.score(forEdgeWithLetter: word1[Int(edge.letterPosition1)])
             
-            let shape = ShapeModel(
-                score: UInt16(score),
-                width:width,
-                height:height,
-                placements: [
-                    PlacementModel(
-                        id: edge.word1,
-                        x: 0,
-                        y: edge.letterPosition2 + 1,
-                        isHorizontal: true),
-                    PlacementModel(
-                        id: edge.word2,
-                        x: edge.letterPosition1 + 1,
-                        y: 0,
-                        isHorizontal: false)
-                ]
-            )
-            result.append(shape)
+            if score >= scoreMin && ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
+                
+                let shape = ShapeModel(
+                    score: UInt16(score),
+                    width:width,
+                    height:height,
+                    placements: [
+                        PlacementModel(
+                            id: edge.word1,
+                            x: 0,
+                            y: edge.letterPosition2 + 1,
+                            isHorizontal: true),
+                        PlacementModel(
+                            id: edge.word2,
+                            x: edge.letterPosition1 + 1,
+                            y: 0,
+                            isHorizontal: false)
+                    ]
+                )
+                result.append(shape)
+            }
         }
         return result
     }

@@ -46,6 +46,7 @@ public class EdgeCalculator {
                                 }
                                 else {
                                     
+                                    
                                     result.append(EdgeModel(
                                             word1: UInt8(wordId1),
                                         letterPosition1: UInt8(letterPosition1), word2: UInt8(wordId2),
