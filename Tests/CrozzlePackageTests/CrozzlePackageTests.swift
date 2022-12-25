@@ -13,6 +13,20 @@ final class CrozzlePackageTests: XCTestCase {
         // Must be more than 0 items for us to get the first one
         XCTAssertGreaterThan(edges.count, 0)
         
+        let edge = edges[0]
+        
+        XCTAssertEqual(edge.h, 0)
+        XCTAssertEqual(edge.v, 1)
+//        let horizontalWord = wordList[Int(edge.h)]
+//        let verticalWord = wordList[Int(edge.v)]
+        
+        XCTAssertEqual(edge.hPosFromStart, 0)
+        XCTAssertEqual(edge.hPosFromEnd, 3)
+        
+        XCTAssertEqual(edge.vPosFromStart, 1)
+        XCTAssertEqual(edge.vPosFromEnd, 3)
+        
+        
         // We convert the edges to shapes
         let shapes = EdgeToShapeConverter.toShape(fromEdges: edges, usingWords: wordList, scoreMin: 0, widthMax:17, heightMax:12)
         
@@ -46,6 +60,18 @@ final class CrozzlePackageTests: XCTestCase {
         XCTAssertEqual(b.y, 0)
         XCTAssertFalse(b.isHorizontal)
 
+        let drawn = DrawShape.draw(shape: shape, wordList: wordList)
+        print(drawn)
+        
+        let expected = "" +
+           " .    \n" +
+           " A    \n" +
+           ".ZION.\n" +
+           " U    \n" +
+           " R    \n" +
+           " E    \n" +
+           " .    "
+        XCTAssertEqual(drawn, expected)
     }
     
     

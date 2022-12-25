@@ -19,12 +19,12 @@ public class EdgeToShapeConverter {
         result.reserveCapacity(edges.count)
         
         for edge in edges {
-            let word1 = wordList[Int(edge.word1)]
-            let word2 = wordList[Int(edge.word2)]
+            let horizontalWord = wordList[Int(edge.h)]
+            let verticalWord = wordList[Int(edge.v)]
             
-            let width = UInt8(word1.count) + 2
-            let height = UInt8(word2.count) + 2
-            let score = ScoreCalculator.score(forEdgeWithLetter: word1[Int(edge.letterPosition1)])
+            let width = UInt8(horizontalWord.count) + 2
+            let height = UInt8(verticalWord.count) + 2
+            let score = ScoreCalculator.score(forEdgeWithLetter: horizontalWord[Int(edge.hPosFromStart)])
             
             if score >= scoreMin && ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
                 
@@ -34,13 +34,13 @@ public class EdgeToShapeConverter {
                     height:height,
                     placements: [
                         PlacementModel(
-                            id: edge.word1,
+                            id: edge.h,
                             x: 0,
-                            y: edge.letterPosition2 + 1,
+                            y: edge.vPosFromStart + 1,
                             isHorizontal: true),
                         PlacementModel(
-                            id: edge.word2,
-                            x: edge.letterPosition1 + 1,
+                            id: edge.v,
+                            x: edge.hPosFromStart + 1,
                             y: 0,
                             isHorizontal: false)
                     ]

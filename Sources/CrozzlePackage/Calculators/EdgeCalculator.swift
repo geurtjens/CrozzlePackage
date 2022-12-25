@@ -25,32 +25,29 @@ public class EdgeCalculator {
                 result.reserveCapacity(matchingSize)
             }
         
-            for wordId1 in 0..<wordListSize {
+            for hid in 0..<wordListSize {
                 
-                let word1 = wordList[wordId1]
+                let horizontalWord = wordList[hid]
                 
-                
-                for letterPosition1 in 0..<word1.count {
+                for horizontalLetter in 0..<horizontalWord.count {
                     
-                    let letter1 = word1[letterPosition1];
-                
-                    for wordId2 in (wordId1 + 1)..<wordListSize {
+                    for vid in (hid + 1)..<wordListSize {
                         
-                        let word2 = wordList[wordId2];
+                        let verticalWord = wordList[vid];
                         
-                        
-                        for letterPosition2 in 0..<word2.count {
-                            if (word2[letterPosition2] == letter1) {
+                        for verticalLetter in 0..<verticalWord.count {
+                            if verticalWord[verticalLetter] == horizontalWord[horizontalLetter] {
                                 if (cycle == 0) {
                                     matchingSize += 1
                                 }
                                 else {
-                                    
-                                    
                                     result.append(EdgeModel(
-                                            word1: UInt8(wordId1),
-                                        letterPosition1: UInt8(letterPosition1), word2: UInt8(wordId2),
-                                        letterPosition2: UInt8(letterPosition2)))
+                                        h: UInt8(hid),
+                                        hPosFromStart: UInt8(horizontalLetter),
+                                        hPosFromEnd: UInt8(horizontalWord.count - horizontalLetter - 1),
+                                        v: UInt8(vid),
+                                        vPosFromStart: UInt8(verticalLetter),
+                                        vPosFromEnd: UInt8(verticalWord.count - verticalLetter - 1)))
                                 }
                             }
                         }
