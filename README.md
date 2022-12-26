@@ -1,3 +1,3 @@
 # CrozzlePackage
 
-A description of this package.
+A library that makes crozzle shapes.
