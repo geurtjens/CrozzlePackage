@@ -41,31 +41,31 @@ public class ShapeFinder {
         
         var result: [SearchableShapeModel] = []
         
-        if words2.shapeCount > 0 {
+        if words2.count > 0 {
             result.append(words2)
         }
         
-        if words4.shapeCount > 0 {
+        if words4.count > 0 {
             result.append(words4)
         }
         
-        if words5.shapeCount > 0 {
+        if words5.count > 0 {
             result.append(words5)
         }
         
-        if words6.shapeCount > 0 {
+        if words6.count > 0 {
             result.append(words6)
         }
         
-        if words7.shapeCount > 0 {
+        if words7.count > 0 {
             result.append(words7)
         }
         
-        if words8.shapeCount > 0 {
+        if words8.count > 0 {
             result.append(words8)
         }
         
-        if words9.shapeCount > 0 {
+        if words9.count > 0 {
             result.append(words9)
         }
         

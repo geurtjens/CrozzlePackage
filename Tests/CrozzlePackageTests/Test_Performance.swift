@@ -34,30 +34,7 @@ final class Test_Performance: XCTestCase {
         let wordList = WordListExamples.getWordList()
         let wordModel = WordModelSOA(words: wordList)
         let wordCount = wordModel.wordCount
-        
-        let C3x3_LMO_DMU = ToShape.from(cluster: C3x3_LMO_DMU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_DUD = ToShape.from(cluster: C3x3_LMO_DUD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_MOM = ToShape.from(cluster: C3x3_LMO_MOM.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_OMD = ToShape.from(cluster: C3x3_LMO_OMD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_OMO = ToShape.from(cluster: C3x3_LMO_OMO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_OMU = ToShape.from(cluster: C3x3_LMO_OMU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_UDU = ToShape.from(cluster: C3x3_LMO_UDU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_UMD = ToShape.from(cluster: C3x3_LMO_UMD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C3x3_LMO_UMO = ToShape.from(cluster: C3x3_LMO_UMO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        
-        let C2x3_LRL_MO = ToShape.from(cluster: C2x3_LRL_MO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let C2x3_LRL_OM = ToShape.from(cluster: C2x3_LRL_OM.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
+          
         let cluster = C2x3_RLR_MO.Execute(W: wordModel, wordCount: wordCount)
         
         let C2x3_RLR_MO = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)

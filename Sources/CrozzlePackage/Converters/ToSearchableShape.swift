@@ -61,8 +61,8 @@ class ToSearchableShape {
         }
         
         let result = SearchableShapeModel(
+            count: shapeCount,
             numberOfWordsInEachShape: numberOfWordsInEachShape,
-            shapeCount: shapeCount,
             wordCount: wordCount,
             score: score,
             width: width,

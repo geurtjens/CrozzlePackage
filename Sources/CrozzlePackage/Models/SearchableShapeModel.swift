@@ -10,12 +10,12 @@ import Foundation
 /// Our main structure for storing shapes after they have been calculated by the algorithm and we store all shapes of the same number of words in each of these structures.  So a 2x4 and a 3x3 which both have 6 words and so be stored in the same one of these structures.
 public struct SearchableShapeModel {
     
+    /// How many shapes we have in this structure, should be same as the size of score, width, height
+    let count: Int
+    
     /// How many words are in each shape.  Its the stride by which we move from one shape to another.  All shapes in this structure have same number of words
     /// so we are storing them in structures of same size to make it quicker and more efficient storage
     let numberOfWordsInEachShape: Int
-    
-    /// How many shapes we have in this structure, should be same as the size of score, width, height
-    let shapeCount: Int
     
     /// The total number of words in each of the wordId, x, y, isHorizontal arrays.
     let wordCount: Int

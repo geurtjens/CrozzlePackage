@@ -9,6 +9,33 @@ import Foundation
 /// Everything we need to create the edge shapes
 public class EdgeCalculator {
     
+    /// provides edges in both directions and that fit within the score and size limits
+    public static func findValidEdges(fromWordList wordList: [String], scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [EdgeModel] {
+        let edges = EdgeCalculator.findEdges(fromWordList: wordList)
+        
+        var validEdges: [EdgeModel] = []
+        for edge in edges {
+            
+            let shape = EdgeToShapeConverter.toShape(fromEdge: edge, usingWords: wordList, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)
+            
+            if shape != nil {
+                validEdges.append(edge)
+                
+                let reversedEdge = EdgeModel(
+                    h:edge.v,
+                    hPosFromStart:edge.vPosFromStart,
+                    hPosFromEnd: edge.vPosFromEnd,
+                    v:edge.h,
+                    vPosFromStart:edge.hPosFromStart,
+                    vPosFromEnd: edge.hPosFromEnd)
+                
+                validEdges.append(reversedEdge)
+            }
+        }
+        return validEdges
+    }
+    
+    
     /// Finds all edges found within an array of words
     /// - Parameter wordList: A list of words
     /// - Returns: A list of valid edges

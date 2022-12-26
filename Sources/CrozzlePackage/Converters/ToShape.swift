@@ -144,7 +144,7 @@ public class ToShape {
                 let wordId = Int(cluster.wordId[wordPos])
                 let wordSize = wordModel.Len[wordId]
 
-                let word = wordModel.Start[wordId]
+                //let word = wordModel.Start[wordId]
                 
                 // We take out the number of horizontal words as they will all occupy the cluster block
                 let wordSizeOverlap = wordSize - horizontalWordCount

@@ -70,11 +70,27 @@ public class RemoveDuplicates {
                 destinationStart += stride
             }
             sourceStart += stride
-
         }
         return result
     }
     
+    public static func FilterUnique2(duplicates: [Bool], wordId: [UInt8], startPos: [UInt8], existingSize: Int, stride: Int, uniqueSize: Int ) -> ([UInt8], [UInt8]) {
+        var result: [UInt8] = Array(repeating: 0, count: uniqueSize * stride)
+        var result2: [UInt8] = Array(repeating: 0, count: uniqueSize * stride)
+        var destinationStart = 0
+        var sourceStart = 0
+        for i in 0..<existingSize {
+            if duplicates[i] == false {
+                for j in 0..<stride {
+                    result[destinationStart + j] = wordId[sourceStart + j]
+                    result2[destinationStart + j] = startPos[sourceStart + j]
+                }
+                destinationStart += stride
+            }
+            sourceStart += stride
+        }
+        return (result, result2)
+    }
     
     public static func RemoveDuplicates2x2(cluster: ClusterModel) -> ClusterModel {
         let duplicates:[Bool] = FindDuplicates2x2(size: cluster.size, stride: cluster.stride, wordId: cluster.wordId)

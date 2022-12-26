@@ -24,7 +24,7 @@ final class Test_ShapeFinder: XCTestCase {
         
         var totalShapes = 0
         for item in result {
-            totalShapes += item.shapeCount
+            totalShapes += item.count
         }
         
         XCTAssertEqual(totalShapes, 11937)
@@ -40,7 +40,7 @@ final class Test_ShapeFinder: XCTestCase {
             
             var totalShapes = 0
             for item in result {
-                totalShapes += item.shapeCount
+                totalShapes += item.count
             }
             
             XCTAssertEqual(totalShapes, 11937)
