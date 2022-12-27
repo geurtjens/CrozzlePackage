@@ -41,6 +41,8 @@ public struct SearchableShapeModel {
     /// if isHorizontal is true then this word is placed horizontally in the shape else its placed vertically
     let isHorizontal: [Bool]
     
-    /// This dictionary can be looked up so if you want to know where each particular word like word 3 is, then look up 3 in the dictionary and its either nil or an array of positions within the x,y,isHorizontal arrays.  Should be a good search optimization.
-    let wordIndex: [UInt8:[Int]]
+    /// This dictionary can be looked up so if you want to know where each particular word like word 3 is, then look up 3 in the dictionary
+    /// and its either meaning that this word has no shape at all
+    /// or an array of shapeId, or maybe it should be the absolute value not sure depending on the logic so it could be position within the x,y,isHorizontal arrays, no perhaps shape Id is ok for now.  Should be a good search optimization.
+    let wordToShapeIdIndex: [UInt8:[Int]]
 }

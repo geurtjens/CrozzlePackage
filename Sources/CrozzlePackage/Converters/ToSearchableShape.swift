@@ -48,10 +48,12 @@ class ToSearchableShape {
                 
                 // Whenever we have a word put this into the index
                 if wordIndex[placement.id] == nil {
-                    wordIndex[placement.id] = [wordPos]
+                    // This is the first instance of that wordId being found
+                    wordIndex[placement.id] = [shapeId]
                 } else {
+                    // Take the list of found shapeId and then add another shapeId
                     var list = wordIndex[placement.id]!
-                    list.append(wordPos)
+                    list.append(shapeId)
                     wordIndex[placement.id] = list
                 }
                 
@@ -71,7 +73,7 @@ class ToSearchableShape {
             x: x,
             y: y,
             isHorizontal: isHorizontal,
-            wordIndex: wordIndex
+            wordToShapeIdIndex: wordIndex
         )
         
         return result
