@@ -245,13 +245,14 @@ struct OpenDonutCalculator {
         
         for topRightEdge in topRightEdges {
             for bottomLeftEdge in bottomLeftEdges {
-                let topRightPos = Int(topRightEdge.hPosFromStart) - interlockWidth + 1
-                let bottomLeftPos = Int(bottomLeftEdge.vPosFromStart) - interlockHeight + 1
                 
                 let topWord = words[Int(topRightEdge.h)]
+                let leftWord = words[Int(bottomLeftEdge.v)]
                 let rightWord = words[Int(topRightEdge.v)]
                 let bottomWord = words[Int(bottomLeftEdge.h)]
-                let leftWord = words[Int(bottomLeftEdge.v)]
+                
+                let topRightPos = Int(topRightEdge.hPosFromStart) - interlockWidth + 1
+                let bottomLeftPos = Int(bottomLeftEdge.vPosFromStart) - interlockHeight + 1
                 
                 if topRightPos >= topWord.count {
                     print("topRightPos out of range")
@@ -269,17 +270,35 @@ struct OpenDonutCalculator {
                         topRightEdge.v != bottomLeftEdge.h && topRightEdge.v != bottomLeftEdge.v {
                         
                         
-
+                        let placements = [
+                            PlacementModel(
+                                id: topRightEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomLeftEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: topRightEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false),
+                            PlacementModel(
+                                id: bottomLeftEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false)
+                        ]
          
 
 //                        let pattern = String(topRightLetter) + String(topRightEdge.letter) + String(bottomLeftEdge.letter)
 //
 //                        let score = ScoreCalculator.score(word: pattern) + 40
 //
-                        let hid = [ topRightEdge.h, bottomLeftEdge.h ]
-                        let vid = [ bottomLeftEdge.v, topRightEdge.v ]
-                        let h = [ topWord, bottomWord ]
-                        let v = [ leftWord, rightWord ]
+                        
                         
 //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: minScore, maxWidth: maxWidth, maxHeight: maxHeight)
 //                        if shape != nil {
@@ -331,10 +350,32 @@ struct OpenDonutCalculator {
 //
 //                        let score = ScoreCalculator.score(word: pattern) + 40
                         
-                        let hid = [ topRightEdge.h, bottomLeftEdge.h ]
-                        let vid = [ bottomLeftEdge.v, topRightEdge.v ]
-                        let h = [ topWord, bottomWord ]
-                        let v = [ leftWord, rightWord ]
+                        let placements = [
+                            PlacementModel(
+                                id: topRightEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomLeftEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomLeftEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false),
+                            PlacementModel(
+                                id: topRightEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false)
+                        ]
+                        
+                        
+                        
+                        
                         
 //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: scoreMin, maxWidth: widthMax, maxHeight: heightMax)
 //                        if shape != nil {
@@ -382,11 +423,31 @@ struct OpenDonutCalculator {
                         
                         //let pattern = String(topLeftEdge.letter) + String(bottomRightEdge.letter) + String(topLeftLetter)
 
-                        let hid = [ topLeftEdge.h, bottomRightEdge.h ]
-                        let vid = [ topLeftEdge.v, bottomRightEdge.v ]
-                        let h = [ topWord, bottomWord ]
-                        let v = [ leftWord, rightWord ]
                         
+                        let placements = [
+                            PlacementModel(
+                                id: topLeftEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomRightEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: topLeftEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false),
+                            PlacementModel(
+                                id: bottomRightEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false)
+                        ]
+                        
+                         
 //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: minScore, maxWidth: maxWidth, maxHeight: maxHeight)
 //                        if shape != nil {
 //                            result.append(shape!)
@@ -430,16 +491,34 @@ struct OpenDonutCalculator {
                         topLeftEdge.v != bottomRightEdge.h && topLeftEdge.v != bottomRightEdge.v {
                         
                         
-                        
+                        let placements = [
+                            PlacementModel(
+                                id: topLeftEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomRightEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: topLeftEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false),
+                            PlacementModel(
+                                id: bottomRightEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false)
+                        ]
                         
          
 
                         //let pattern = String(topLeftEdge.letter) + String(bottomRightEdge.letter) + String(topLeftLetter)
 
-                        let hid = [ topLeftEdge.h, bottomRightEdge.h ]
-                        let vid = [ topLeftEdge.v, bottomRightEdge.v ]
-                        let h = [ topWord, bottomWord ]
-                        let v = [ leftWord, rightWord ]
+                       
                         
 //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: minScore, maxWidth: maxWidth, maxHeight: maxHeight)
 //                        if shape != nil {
@@ -492,14 +571,32 @@ struct OpenDonutCalculator {
                     if (topLeft_TopRightLetter == bottomRight_TopRightLetter)
                     {
                         
-                        
+                        let placements = [
+                            PlacementModel(
+                                id: topLeftEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: bottomRightEdge.h,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: true),
+                            PlacementModel(
+                                id: topLeftEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false),
+                            PlacementModel(
+                                id: bottomRightEdge.v,
+                                x: 0,
+                                y: 0,
+                                isHorizontal: false)
+                        ]
 
                         //let pattern = String(topLeftEdge.letter) + String(topLeft_TopRightLetter) + String(bottomRightEdge.letter)
                         
-                        let hid = [ topLeftEdge.h, bottomRightEdge.h ]
-                        let vid = [ topLeftEdge.v, bottomRightEdge.v ]
-                        let h = [ topWord, bottomWord ]
-                        let v = [ leftWord, rightWord ]
+                       
                         
                         
 //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: minScore, maxWidth: maxWidth, maxHeight: maxHeight)
@@ -541,7 +638,28 @@ struct OpenDonutCalculator {
             if (topInterlockChar == leftInterlockChar && rightInterlockChar == bottomInterlockChar) {
                 
                 
-                
+                let placements = [
+                    PlacementModel(
+                        id: topRightEdge.h,
+                        x: 0,
+                        y: 0,
+                        isHorizontal: true),
+                    PlacementModel(
+                        id: bottomLeftEdge.h,
+                        x: 0,
+                        y: 0,
+                        isHorizontal: true),
+                    PlacementModel(
+                        id: topRightEdge.v,
+                        x: 0,
+                        y: 0,
+                        isHorizontal: false),
+                    PlacementModel(
+                        id: bottomLeftEdge.v,
+                        x: 0,
+                        y: 0,
+                        isHorizontal: false)
+                ]
 
                //let pattern = String(topInterlockChar) + String(topRightEdge.letter) + String(bottomLeftEdge.letter) + String(rightInterlockChar)
                 
