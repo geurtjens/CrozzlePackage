@@ -17,6 +17,10 @@ So we can easily find merge possibilities and this structure is very efficient i
 
 And because its an array the memory layout is good for a CPU or GPU to find the values they want.
 
+We have two indexes, one is a dictionary which is useful for CPU
+
+And then we have
+
 ## Topics
 
 ### Main Models

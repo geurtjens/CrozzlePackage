@@ -62,6 +62,35 @@ class ToSearchableShape {
             }
         }
         
+        /// This will tell you for a given word where is the first time in the `searchWordIndexForShapeId` index that it appears
+        var searchWordStart:[Int] = Array(repeating: -1, count: maxWordId)
+        
+        /// How many instances of that word are there in this index
+        var searchWordCount:[Int] = Array(repeating: -1, count: maxWordId)
+        
+        // Each individual shape id that has this word in it
+        var searchWordIndexForShapeId: [Int] = Array(repeating: -1, count: numberOfWordsInEachShape * shapeCount)
+        
+        var searchIndexPos = 0
+        for wordId in 0..<maxWordId {
+            
+            let indexList = wordIndex[UInt8(wordId)]
+            
+            if indexList != nil {
+                
+                let shapeForWordCount = indexList!.count
+                
+                // We have some words to find
+                searchWordStart[wordId] = searchIndexPos
+                searchWordCount[wordId] = shapeForWordCount
+                for i in 0..<shapeForWordCount {
+                    searchWordIndexForShapeId[searchIndexPos + i] = indexList![i]
+                }
+                searchIndexPos += shapeForWordCount
+            }
+        }
+        
+        
         let result = SearchableShapeModel(
             count: shapeCount,
             numberOfWordsInEachShape: numberOfWordsInEachShape,
@@ -73,7 +102,12 @@ class ToSearchableShape {
             x: x,
             y: y,
             isHorizontal: isHorizontal,
-            wordToShapeIdIndex: wordIndex
+            wordToShapeIdIndex: wordIndex,
+            searchWordStart: searchWordStart,
+            searchWordCount: searchWordCount,
+            searchWordIndexForShapeId: searchWordIndexForShapeId
+            
+            // How do we make the word more searchable than just a dictionar
         )
         
         return result

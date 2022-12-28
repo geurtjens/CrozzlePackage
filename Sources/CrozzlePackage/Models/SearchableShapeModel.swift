@@ -44,5 +44,16 @@ public struct SearchableShapeModel {
     /// This dictionary can be looked up so if you want to know where each particular word like word 3 is, then look up 3 in the dictionary
     /// and its either meaning that this word has no shape at all
     /// or an array of shapeId, or maybe it should be the absolute value not sure depending on the logic so it could be position within the x,y,isHorizontal arrays, no perhaps shape Id is ok for now.  Should be a good search optimization.
+    /// Useful for CPU as its a dictionary
     let wordToShapeIdIndex: [UInt8:[Int]]
+    
+    
+    
+    
+    // no we could also reserve position 0 for doesnt exist and so we add an extra value for each one
+    let searchWordStart: [Int] // If -1 then it means the word does not exist
+    
+    let searchWordCount: [Int]
+    
+    let searchWordIndexForShapeId: [Int]
 }
