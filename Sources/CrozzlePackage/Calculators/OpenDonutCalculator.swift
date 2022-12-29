@@ -373,42 +373,56 @@ struct OpenDonutCalculator {
                     if topRightEdge.h != bottomLeftEdge.h && topRightEdge.h != bottomLeftEdge.v  &&
                         topRightEdge.v != bottomLeftEdge.h && topRightEdge.v != bottomLeftEdge.v {
                         
+                        let topPos = topRightEdge.hPosFromStart
+                        let leftPos = bottomLeftEdge.vPosFromStart
+                        let bottomPos = bottomLeftEdge.hPosFromStart
+                        let rightPos = topRightEdge.vPosFromStart
                         
-                        //                        let pattern = String(topRightEdge.letter) + String(bottomLeftEdge.letter) + String(topRightLetter)
-                        //
-                        //                        let score = ScoreCalculator.score(word: pattern) + 40
+                        let pattern = String([
+                            topWord[Int(topPos)],
+                            bottomWord[Int(bottomPos)],
+                            bottomWord[Int(bottomPos) + interlockWidth - 1] ])
                         
-                        let placements = [
-                            PlacementModel(
-                                id: topRightEdge.h,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: true),
-                            PlacementModel(
-                                id: bottomLeftEdge.h,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: true),
-                            PlacementModel(
-                                id: bottomLeftEdge.v,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: false),
-                            PlacementModel(
-                                id: topRightEdge.v,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: false)
-                        ]
+                        let score = UInt16(ScoreCalculator.score(word: pattern)) + 40
                         
-                        
-                        
-                        
-                        
-                        //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: scoreMin, maxWidth: widthMax, maxHeight: heightMax)
-                        //                        if shape != nil {
-                        //                            result.append(shape!)
-                        //                        }
+                        if score >= scoreMin {
+                            
+                            let width = bottomPos + UInt8(topWord.count) + 3
+                            
+                            let height = rightPos + 1 + max(UInt8(leftWord.count + 2), UInt8(rightWord.count) - rightPos + 1)
+                            
+                            
+                            if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
+                                
+                                let shape = ShapeModel(
+                                    score: score,
+                                    width: width,
+                                    height: height,
+                                    placements: [
+                                        PlacementModel(
+                                            id: topRightEdge.h,
+                                            x: topPos + 1,
+                                            y: rightPos + 1,
+                                            isHorizontal: true),
+                                        PlacementModel(
+                                            id: bottomLeftEdge.h,
+                                            x: 0,
+                                            y: rightPos + UInt8(interlockHeight),
+                                            isHorizontal: true),
+                                        PlacementModel(
+                                            id: bottomLeftEdge.v,
+                                            x: bottomPos + 1,
+                                            y: rightPos + 1,
+                                            isHorizontal: false),
+                                        PlacementModel(
+                                            id: topRightEdge.v,
+                                            x: bottomPos + UInt8(interlockWidth),
+                                            y: 0,
+                                            isHorizontal: false)
+                                    ])
+                                result.append(shape)
+                            }
+                        }
                     }
                 }
             }
@@ -436,8 +450,6 @@ struct OpenDonutCalculator {
                 let rightWord = words[Int(bottomRightEdge.v)]
                 
                 
-                
-                
                 let topLeftPos = Int(topLeftEdge.hPosFromStart) + interlockWidth - 1
                 let bottomRightPos = Int(bottomRightEdge.vPosFromStart) - interlockHeight + 1
                 
@@ -449,37 +461,59 @@ struct OpenDonutCalculator {
                     if topLeftEdge.h != bottomRightEdge.h && topLeftEdge.h != bottomRightEdge.v  &&
                         topLeftEdge.v != bottomRightEdge.h && topLeftEdge.v != bottomRightEdge.v {
                         
-                        //let pattern = String(topLeftEdge.letter) + String(bottomRightEdge.letter) + String(topLeftLetter)
+                        // The interlocking position for each letter
+                        let topPos = topLeftEdge.hPosFromStart
+                        let leftPos = topLeftEdge.vPosFromStart
+                        let bottomPos = bottomRightEdge.hPosFromStart
                         
+                        let rightPos = bottomRightEdge.vPosFromStart - UInt8(interlockHeight - 1)
                         
-                        let placements = [
-                            PlacementModel(
-                                id: topLeftEdge.h,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: true),
-                            PlacementModel(
-                                id: bottomRightEdge.h,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: true),
-                            PlacementModel(
-                                id: topLeftEdge.v,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: false),
-                            PlacementModel(
-                                id: bottomRightEdge.v,
-                                x: 0,
-                                y: 0,
-                                isHorizontal: false)
-                        ]
+                        let pattern = String([
+                            topWord[Int(topPos)],
+                            rightWord[Int(rightPos)],
+                            bottomWord[Int(bottomPos)] ])
                         
+                        let score = UInt16(ScoreCalculator.score(word: pattern)) + 40
                         
-                        //                        let shape = CreateShape(pattern: pattern, h: h, v: v, hid: hid, vid: vid, interlockWidth: interlockWidth, interlockHeight: interlockHeight, minScore: minScore, maxWidth: maxWidth, maxHeight: maxHeight)
-                        //                        if shape != nil {
-                        //                            result.append(shape!)
-                        //                        }
+                        if score >= scoreMin {
+                            
+                            let width = topPos +  max(UInt8(topWord.count) - topPos, UInt8(bottomWord.count + 1)) + 2
+                            
+                            let maxHeight = max(leftPos, rightPos)
+                            let maxHeight2 = max(UInt8(leftWord.count) - leftPos, UInt8(rightWord.count) - rightPos)
+                            let height = maxHeight + maxHeight2 + 2
+                            
+                            if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
+                                
+                                let shape = ShapeModel(
+                                    score: score,
+                                    width: width,
+                                    height: height,
+                                    placements: [
+                                        PlacementModel(
+                                            id: topLeftEdge.h,
+                                            x: 0,
+                                            y: maxHeight + 1,
+                                            isHorizontal: true),
+                                        PlacementModel(
+                                            id: bottomRightEdge.h,
+                                            x: topPos + 1,
+                                            y: maxHeight + UInt8(interlockHeight),
+                                            isHorizontal: true),
+                                        PlacementModel(
+                                            id: topLeftEdge.v,
+                                            x: topPos + 1,
+                                            y: maxHeight - leftPos,
+                                            isHorizontal: false),
+                                        PlacementModel(
+                                            id: bottomRightEdge.v,
+                                            x: topPos + UInt8(interlockWidth),
+                                            y: maxHeight - rightPos,
+                                            isHorizontal: false)
+                                    ])
+                                result.append(shape)
+                            }
+                        }
                     }
                 }
             }

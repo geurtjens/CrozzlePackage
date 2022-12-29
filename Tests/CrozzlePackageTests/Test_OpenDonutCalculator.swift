@@ -17,6 +17,135 @@ final class Test_OpenDonutCalculator: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    func testTopLeft() throws {
+        let wordList = WordListExamples.getWordList()
+        
+        let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
+        
+        let result = OpenDonutCalculator.TopLeft(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
+        
+        let shape = result[0]
+        XCTAssertEqual(shape.width, 9)
+        XCTAssertEqual(shape.height, 7)
+        XCTAssertEqual(shape.score, 144)
+        XCTAssertEqual(shape.placements.count,4)
+        
+        let top = shape.placements[0]
+        XCTAssertEqual(wordList[Int(top.id)], "AZURE")
+        XCTAssertEqual(top.id, 1)
+        XCTAssertEqual(top.x, 2)
+        XCTAssertEqual(top.y, 1)
+        XCTAssertTrue(top.isHorizontal)
+        
+        let bottom = shape.placements[1]
+        XCTAssertEqual(wordList[Int(bottom.id)], "HYMN")
+        XCTAssertEqual(bottom.id, 7)
+        XCTAssertEqual(bottom.x, 0)
+        XCTAssertEqual(bottom.y, 4)
+        XCTAssertTrue(bottom.isHorizontal)
+        
+        let left = shape.placements[2]
+        XCTAssertEqual(wordList[Int(left.id)], "TOYS")
+        XCTAssertEqual(left.id, 2)
+        XCTAssertEqual(left.x, 2)
+        XCTAssertEqual(left.y, 1)
+        XCTAssertFalse(left.isHorizontal)
+        
+        let right = shape.placements[3]
+        XCTAssertEqual(wordList[Int(right.id)], "ZION")
+        XCTAssertEqual(right.id, 0)
+        XCTAssertEqual(right.x, 4)
+        XCTAssertEqual(right.y, 0)
+        XCTAssertFalse(right.isHorizontal)
+        
+        let expectedText = "" +
+        "    .    \n" +
+        "  .AZURE.\n" +
+        "  T I    \n" +
+        "  O O    \n" +
+        ".HYMN.   \n" +
+        "  S .    \n" +
+        "  .      "
+        
+        print(expectedText)
+        
+        let text = DrawShape.draw(shape: result[0], wordList: wordList)
+        XCTAssertEqual(text, expectedText)
+        print(text)
+        
+        for shape in result {
+            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
+            print(text2)
+        }
+    }
+    
+    
+    func testBottomLeft() throws {
+        let wordList = WordListExamples.getWordList()
+        
+        let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
+        
+        let result = OpenDonutCalculator.BottomLeft(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
+        
+        let shape = result[0]
+        XCTAssertEqual(shape.width, 8)
+        XCTAssertEqual(shape.height, 10)
+        XCTAssertEqual(shape.score, 60)
+        XCTAssertEqual(shape.placements.count,4)
+        
+        let top = shape.placements[0]
+        XCTAssertEqual(wordList[Int(top.id)], "ZION")
+        XCTAssertEqual(top.id, 0)
+        XCTAssertEqual(top.x, 0)
+        XCTAssertEqual(top.y, 4)
+        XCTAssertTrue(top.isHorizontal)
+        
+        let bottom = shape.placements[1]
+        XCTAssertEqual(wordList[Int(bottom.id)], "TOYS")
+        XCTAssertEqual(bottom.id, 2)
+        XCTAssertEqual(bottom.x, 2)
+        XCTAssertEqual(bottom.y, 7)
+        XCTAssertTrue(bottom.isHorizontal)
+        
+        let left = shape.placements[2]
+        XCTAssertEqual(wordList[Int(left.id)], "FAMILY")
+        XCTAssertEqual(left.id, 15)
+        XCTAssertEqual(left.x, 2)
+        XCTAssertEqual(left.y, 0)
+        XCTAssertFalse(left.isHorizontal)
+        
+        let right = shape.placements[3]
+        XCTAssertEqual(wordList[Int(right.id)], "CINNAMON")
+        XCTAssertEqual(right.id, 65)
+        XCTAssertEqual(right.x, 4)
+        XCTAssertEqual(right.y, 0)
+        XCTAssertFalse(right.isHorizontal)
+        
+        let expectedText = "" +
+        "  . .   \n" +
+        "  F C   \n" +
+        "  A I   \n" +
+        "  M N   \n" +
+        ".ZION.  \n" +
+        "  L A   \n" +
+        "  Y M   \n" +
+        "  .TOYS.\n" +
+        "    N   \n" +
+        "    .   "
+        print(expectedText)
+        
+        let text = DrawShape.draw(shape: result[0], wordList: wordList)
+        XCTAssertEqual(text, expectedText)
+        print(text)
+        
+//        for shape in result {
+//            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
+//            print(text2)
+//        }
+    }
+    
+    
+    
     func testTopRight() throws {
         let wordList = WordListExamples.getWordList()
         
