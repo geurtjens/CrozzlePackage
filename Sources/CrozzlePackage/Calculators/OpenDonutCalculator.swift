@@ -45,7 +45,7 @@ struct OpenDonutCalculator {
         
         return result
     }
-    static func Execute(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: Int, widthMax: Int, heightMax: Int)
+    static func Execute(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8)
     {
         
         var bottomRightShapes = BottomRight(edges: edges, words: words, interlockWidth: interlockWidth, interlockHeight: interlockHeight, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)
@@ -235,10 +235,13 @@ struct OpenDonutCalculator {
     //    }
     
     
-    public static func BottomRight(edges:[EdgeModel], words: [String], interlockWidth:Int, interlockHeight:Int,  scoreMin: Int, widthMax: Int, heightMax: Int) -> [ShapeModel]
+    public static func BottomRight(edges:[EdgeModel], words: [String], interlockWidth:Int, interlockHeight:Int,  scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel]
     {
         var result:[ShapeModel] = []
         
+        let wordCount = words.count
+        var duplicates: Set = [0]
+
         let topRightEdges = edges.filter {$0.vPosFromEnd == interlockHeight - 2 && $0.hPosFromStart >= interlockWidth - 1}
         
         let bottomLeftEdges = edges.filter {$0.hPosFromEnd == interlockWidth - 2 && $0.vPosFromStart >= interlockHeight - 1}
@@ -246,10 +249,15 @@ struct OpenDonutCalculator {
         for topRightEdge in topRightEdges {
             for bottomLeftEdge in bottomLeftEdges {
                 
-                let topWord = words[Int(topRightEdge.h)]
-                let leftWord = words[Int(bottomLeftEdge.v)]
-                let rightWord = words[Int(topRightEdge.v)]
-                let bottomWord = words[Int(bottomLeftEdge.h)]
+                let topId = Int(topRightEdge.h)
+                let bottomId = Int(bottomLeftEdge.h)
+                let leftId = Int(bottomLeftEdge.v)
+                let rightId = Int(topRightEdge.v)
+                
+                let topWord = words[topId]
+                let bottomWord = words[bottomId]
+                let leftWord = words[leftId]
+                let rightWord = words[rightId]
                 
                 let topRightPos = Int(topRightEdge.hPosFromStart) - interlockWidth + 1
                 let bottomLeftPos = Int(bottomLeftEdge.vPosFromStart) - interlockHeight + 1
@@ -289,35 +297,60 @@ struct OpenDonutCalculator {
                             
                             if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
                                 
-                                let shape = ShapeModel(
-                                    score: score,
-                                    width: width,
-                                    height: height,
-                                    placements: [
-                                        PlacementModel(
-                                            id: topRightEdge.h,
-                                            x: xMax - topPos,
-                                            y: yMax + 1,
-                                            isHorizontal: true),
-                                        PlacementModel(
-                                            id: bottomLeftEdge.h,
-                                            x: xMax - bottomPos,
-                                            y: yMax + UInt8(interlockHeight),
-                                            isHorizontal: true),
-                                        PlacementModel(
-                                            id: bottomLeftEdge.v,
-                                            x: xMax + 1,
-                                            y: yMax - leftPos,
-                                            isHorizontal: false),
-                                        PlacementModel(
-                                            id: topRightEdge.v,
-                                            x: xMax + UInt8(interlockWidth) - 1 + 1,
-                                            y: yMax - rightPos,
-                                            isHorizontal: false)
-                                    ])
-                                result.append(shape)
+                                var isDuplicate = false
+                                if interlockWidth == interlockHeight {
+                                    
+                                    var current = topId
+                                    current += bottomId * wordCount
+                                    current += leftId * wordCount * wordCount
+                                    current += rightId * wordCount * wordCount * wordCount
+                                    
+                                    var duplicate = leftId
+                                    duplicate += rightId * wordCount
+                                    duplicate += topId * wordCount * wordCount
+                                    duplicate += bottomId * wordCount * wordCount * wordCount
+                                    
+                                    //duplicates.insert(duplicate)
+                                    
+                                    if duplicates.contains(duplicate) {
+                                        isDuplicate = true
+                                    }
+                                    else {
+                                        duplicates.insert(current)
+                                    }
+                                }
+                                //print(duplicates.count)
+                                if isDuplicate == false {
+                                    
+                                    let shape = ShapeModel(
+                                        score: score,
+                                        width: width,
+                                        height: height,
+                                        placements: [
+                                            PlacementModel(
+                                                id: topRightEdge.h,
+                                                x: xMax - topPos,
+                                                y: yMax + 1,
+                                                isHorizontal: true),
+                                            PlacementModel(
+                                                id: bottomLeftEdge.h,
+                                                x: xMax - bottomPos,
+                                                y: yMax + UInt8(interlockHeight),
+                                                isHorizontal: true),
+                                            PlacementModel(
+                                                id: bottomLeftEdge.v,
+                                                x: xMax + 1,
+                                                y: yMax - leftPos,
+                                                isHorizontal: false),
+                                            PlacementModel(
+                                                id: topRightEdge.v,
+                                                x: xMax + UInt8(interlockWidth) - 1 + 1,
+                                                y: yMax - rightPos,
+                                                isHorizontal: false)
+                                        ])
+                                    result.append(shape)
+                                }
                             }
-                            
                             
                             
                             
@@ -341,21 +374,33 @@ struct OpenDonutCalculator {
     }
     
     
-    public static func TopLeft(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: Int, widthMax: Int, heightMax: Int) -> [ShapeModel]
+    public static func TopLeft(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel]
     {
         var result:[ShapeModel] = []
+        
+        let wordCount = words.count
+        var duplicates: Set = [0]
         
         let topRightEdges = edges.filter {$0.hPosFromStart == interlockWidth - 2 && $0.vPosFromEnd >= interlockHeight - 1}
         
         let bottomLeftEdges = edges.filter {$0.vPosFromStart == interlockHeight - 2 && $0.hPosFromEnd >= interlockWidth - 1}
         
+        
+        
+        
         for topRightEdge in topRightEdges {
             for bottomLeftEdge in bottomLeftEdges {
                 
-                let topWord = words[Int(topRightEdge.h)]
-                let bottomWord = words[Int(bottomLeftEdge.h)]
-                let leftWord = words[Int(bottomLeftEdge.v)]
-                let rightWord = words[Int(topRightEdge.v)]
+                
+                let topId = Int(topRightEdge.h)
+                let bottomId = Int(bottomLeftEdge.h)
+                let leftId = Int(bottomLeftEdge.v)
+                let rightId = Int(topRightEdge.v)
+                                                  
+                let topWord = words[topId]
+                let bottomWord = words[bottomId]
+                let leftWord = words[leftId]
+                let rightWord = words[rightId]
                 
                 let topRightPos = Int(topRightEdge.vPosFromStart) + interlockHeight - 1
                 let bottomLeftPos = Int(bottomLeftEdge.hPosFromStart) + interlockWidth - 1
@@ -378,6 +423,16 @@ struct OpenDonutCalculator {
                         let bottomPos = bottomLeftEdge.hPosFromStart
                         let rightPos = topRightEdge.vPosFromStart
                         
+//                        let topRightText = DrawShape.draw(shape: EdgeToShapeConverter.toShape(fromEdge: topRightEdge, usingWords: words, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)!, wordList: words)
+//
+//                        print(topRightText)
+//
+//                        let bottomLeftText = DrawShape.draw(shape: EdgeToShapeConverter.toShape(fromEdge: bottomLeftEdge, usingWords: words, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)!, wordList: words)
+//
+//                        print(bottomLeftText)
+                        
+                        
+                        
                         let pattern = String([
                             topWord[Int(topPos)],
                             bottomWord[Int(bottomPos)],
@@ -394,33 +449,61 @@ struct OpenDonutCalculator {
                             
                             if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
                                 
-                                let shape = ShapeModel(
-                                    score: score,
-                                    width: width,
-                                    height: height,
-                                    placements: [
-                                        PlacementModel(
-                                            id: topRightEdge.h,
-                                            x: topPos + 1,
-                                            y: rightPos + 1,
-                                            isHorizontal: true),
-                                        PlacementModel(
-                                            id: bottomLeftEdge.h,
-                                            x: 0,
-                                            y: rightPos + UInt8(interlockHeight),
-                                            isHorizontal: true),
-                                        PlacementModel(
-                                            id: bottomLeftEdge.v,
-                                            x: bottomPos + 1,
-                                            y: rightPos + 1,
-                                            isHorizontal: false),
-                                        PlacementModel(
-                                            id: topRightEdge.v,
-                                            x: bottomPos + UInt8(interlockWidth),
-                                            y: 0,
-                                            isHorizontal: false)
-                                    ])
-                                result.append(shape)
+                                var isDuplicate = false
+                                if interlockWidth == interlockHeight {
+                                    
+                                    var current = topId
+                                    current += bottomId * wordCount
+                                    current += leftId * wordCount * wordCount
+                                    current += rightId * wordCount * wordCount * wordCount
+                                    
+                                    var duplicate = leftId
+                                    duplicate += rightId * wordCount
+                                    duplicate += topId * wordCount * wordCount
+                                    duplicate += bottomId * wordCount * wordCount * wordCount
+                                    
+                                    //duplicates.insert(duplicate)
+                                    
+                                    if duplicates.contains(duplicate) {
+                                        isDuplicate = true
+                                    }
+                                    else {
+                                        duplicates.insert(current)
+                                    }
+                                }
+                                    //print(duplicates.count)
+                                if isDuplicate == false {
+                                    
+                                    let shape = ShapeModel(
+                                        score: score,
+                                        width: width,
+                                        height: height,
+                                        placements: [
+                                            PlacementModel(
+                                                id: topRightEdge.h,
+                                                x: bottomPos + 1, // made it bottomPos
+                                                y: rightPos + 1,
+                                                isHorizontal: true),
+                                            PlacementModel(
+                                                id: bottomLeftEdge.h,
+                                                x: 0,
+                                                y: rightPos + UInt8(interlockHeight),
+                                                isHorizontal: true),
+                                            PlacementModel(
+                                                id: bottomLeftEdge.v,
+                                                x: bottomPos + 1,
+                                                y: rightPos + 1,
+                                                isHorizontal: false),
+                                            PlacementModel(
+                                                id: topRightEdge.v,
+                                                x: bottomPos + UInt8(interlockWidth),
+                                                y: 0,
+                                                isHorizontal: false)
+                                        ])
+                                    //                                let shapeText = DrawShape.draw(shape: shape, wordList: words)
+                                    //                                print(shapeText)
+                                    result.append(shape)
+                                }
                             }
                         }
                     }
@@ -433,10 +516,13 @@ struct OpenDonutCalculator {
     
     
     // bottom left seems like a duplicate of TopRight
-    public static func BottomLeft(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int,  scoreMin: Int, widthMax: Int, heightMax: Int) -> [ShapeModel]
+    public static func BottomLeft(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int,  scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel]
     {
         var result:[ShapeModel] = []
         
+        if interlockWidth == interlockHeight {
+            return result
+        }
         let topLeftEdges = edges.filter {$0.vPosFromEnd == interlockHeight - 2 && $0.hPosFromEnd >= interlockWidth - 1}
         
         let bottomRightEdges = edges.filter {$0.hPosFromStart == interlockWidth - 2 && $0.vPosFromStart >= interlockHeight - 1}
@@ -525,7 +611,7 @@ struct OpenDonutCalculator {
     
     
     
-    public static func TopRight(edges: [EdgeModel], words: [String], interlockWidth:Int, interlockHeight:Int, scoreMin: Int, widthMax: Int, heightMax: Int) -> [ShapeModel]
+    public static func TopRight(edges: [EdgeModel], words: [String], interlockWidth:Int, interlockHeight:Int, scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel]
     {
         var result:[ShapeModel] = []
         

@@ -17,6 +17,170 @@ final class Test_OpenDonutCalculator: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
+    
+    
+    func testSizes() throws {
+        let wordList = WordListExamples.getWordList()
+        
+        let widthMax = UInt8(17)
+        let heightMax = UInt8(12)
+        let scoreMin = UInt16(0)
+        
+        let edges = EdgeCalculator.findValidEdges(
+            fromWordList: wordList,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        
+        
+        let o3x3_TopLeft = OpenDonutCalculator.TopLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 3,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x3_TopLeft: \(o3x3_TopLeft.count)")
+        XCTAssertEqual(o3x3_TopLeft.count, 153820)
+        
+        // Top right changes to bottom left so there are no duplicates
+        let o3x3_TopRight = OpenDonutCalculator.TopRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 3,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x3_TopRight: \(o3x3_TopRight.count)")
+        XCTAssertEqual(o3x3_TopRight.count, 247614)
+
+        
+        let o3x3_BottomLeft = OpenDonutCalculator.BottomLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 3,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x3_BottomLeft: \(o3x3_BottomLeft.count)")
+        XCTAssertEqual(o3x3_BottomLeft.count, 0)
+
+        let o3x3_BottomRight = OpenDonutCalculator.BottomRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 3,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        print("O3x3_BottomRight: \(o3x3_BottomRight.count)")
+        XCTAssertEqual(o3x3_BottomRight.count, 160_216)
+
+        
+        
+        let o3x4_TopLeft = OpenDonutCalculator.TopLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 4,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        print("O3x4_TopLeft: \(o3x4_TopLeft.count)")
+        XCTAssertEqual(o3x4_TopLeft.count, 220_148)
+
+        
+        // Top right changes to bottom left so there are no duplicates
+        let o3x4_TopRight = OpenDonutCalculator.TopRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 4,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        print("O3x4_TopRight: \(o3x4_TopRight.count)")
+        XCTAssertEqual(o3x4_TopRight.count, 203487)
+        
+        let o3x4_BottomLeft = OpenDonutCalculator.BottomLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 4,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        print("O3x4_BottomLeft: \(o3x4_BottomLeft.count)")
+        XCTAssertEqual(o3x4_BottomLeft.count, 0)
+        let o3x4_BottomRight = OpenDonutCalculator.BottomRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 4,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        
+        print("O3x4_BottomRight: \(o3x4_BottomRight.count)")
+        XCTAssertEqual(o3x4_BottomRight.count, 206706)
+        
+        
+        
+        let o3x5_TopLeft = OpenDonutCalculator.TopLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 5,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x5_TopLeft: \(o3x5_TopLeft.count)")
+        XCTAssertEqual(o3x5_TopLeft.count, 163_938)
+
+        let o3x5_TopRight = OpenDonutCalculator.TopRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 5,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x5_TopRight: \(o3x5_TopRight.count)")
+        XCTAssertEqual(o3x5_TopRight.count, 140_044)
+        
+        let o3x5_BottomLeft = OpenDonutCalculator.BottomLeft(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 5,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x5_BottomLeft: \(o3x5_BottomLeft.count)")
+        XCTAssertEqual(o3x5_BottomLeft.count, 129_100)
+        
+        let o3x5_BottomRight = OpenDonutCalculator.BottomRight(
+            edges: edges,
+            words: wordList,
+            interlockWidth: 3,
+            interlockHeight: 5,
+            scoreMin: scoreMin,
+            widthMax: widthMax,
+            heightMax: heightMax)
+        print("O3x5_BottomRight: \(o3x5_BottomRight.count)")
+        XCTAssertEqual(o3x5_BottomRight.count, 166_525)
+        
+        
+    }
+    
     func testTopLeft() throws {
         let wordList = WordListExamples.getWordList()
         
