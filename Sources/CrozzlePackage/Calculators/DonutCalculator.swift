@@ -14,17 +14,9 @@ public class DonutCalculator {
         var result: [ShapeModel] = []
         
         let topLeftList = edges.filter() { $0.hPosFromEnd >= interlockWidth - 1 && $0.vPosFromEnd >= interlockHeight - 1}
-        
+
         let bottomRightList = edges.filter() { $0.hPosFromStart >= interlockWidth - 1 && $0.vPosFromStart >= interlockHeight - 1}
-        
-        var wordId: [UInt8] = []
-        var startPos: [UInt8] = []
-        let stride = 4
-        var shapeCount = 0;
-        var index = 0
-        
-        
-        
+
         for topLeftPos in 0..<topLeftList.count {
             for bottomRightPos in 0..<bottomRightList.count {
                 
@@ -138,16 +130,23 @@ public class DonutCalculator {
                                                 isHorizontal: true),
                                             PlacementModel(
                                                 id: UInt8(leftId),
-                                                x: bottomPos + 1,
+                                                x: maxHorizontalStart + 1,
                                                 y: maxVerticalStart - leftPos,
                                                 isHorizontal: false),
                                             PlacementModel(
                                                 id: UInt8(rightId),
-                                                x: bottomPos + UInt8(interlockWidth),
+                                                x: maxHorizontalStart + UInt8(interlockWidth),
                                                 y: maxVerticalStart - rightPos,
                                                 isHorizontal: false)
                                         ])
                                     
+//                                    let text = DrawShape.draw(shape: shape, wordList: wordList)
+//
+//                                    let isValid = ShapeValidator.Execute(shape: shape, wordList: wordList)
+//                                    if isValid == false {
+//                                        print(text)
+//                                        print("Fix it")
+//                                    }
                                     result.append(shape)
                                 }
                                 

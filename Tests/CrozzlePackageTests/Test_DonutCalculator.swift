@@ -21,13 +21,20 @@ final class Test_DonutCalculator: XCTestCase {
         
         let shapes = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 5, interlockHeight: 6, scoreMin: 0, widthMax: 17, heightMax: 12)
         
-        XCTAssertEqual(shapes.count,65081)
+        XCTAssertEqual(shapes.count,19577)
         
+        var invalidShapeCount = 0
         for shape in shapes {
             
             let text = DrawShape.draw(shape: shape, wordList: wordList)
-            print(text)
+            
+            let isValid = ShapeValidator.Execute(shape: shape, wordList: wordList)
+            if isValid == false {
+                print(text)
+                invalidShapeCount += 1
+            }
         }
+        XCTAssertEqual(invalidShapeCount, 0)
     }
     
     func test_Performance() throws {
