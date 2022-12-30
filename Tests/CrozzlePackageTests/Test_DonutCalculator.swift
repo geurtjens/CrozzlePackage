@@ -14,20 +14,39 @@ final class Test_DonutCalculator: XCTestCase {
     // This will contain all edges which havent yet been limited by the size constraint
     func test_Donut3x6() throws {
         
-
+// This fails the test because we have a few badly calculated shapes.  Buts that for another day.
         let wordList = WordListExamples.getWordList()
         
         let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
         
-        let donutModel = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 5, interlockHeight: 6, scoreMin: 0, widthMax: 17, heightMax: 12)
+        let shapes = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 5, interlockHeight: 6, scoreMin: 0, widthMax: 17, heightMax: 12)
         
-        let shapes = DonutToShapeConverter.toShape(fromDonut: donutModel, usingWords: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
-        XCTAssertEqual(donutModel.shapeCount,65081)
+        XCTAssertEqual(shapes.count,65081)
         
         for shape in shapes {
             
             let text = DrawShape.draw(shape: shape, wordList: wordList)
             print(text)
+        }
+    }
+    
+    func test_Performance() throws {
+        measure {
+            let wordList = WordListExamples.getWordList()
+            
+            let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
+            
+            let donutModel = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
+        }
+    }
+    
+    func test_Performance2() throws {
+        measure {
+            let wordList = WordListExamples.getWordList()
+            
+            let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
+            
+            let donutModel = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
         }
     }
 }
