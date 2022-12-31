@@ -46,11 +46,6 @@ final class Test_C2x2_LR_UD: XCTestCase {
         let wordModel = WordModelSOA(words: wordList)
         
         let result = C2x2_LR_UD.Execute(W: wordModel, wordCount: wordList.count)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
         
         let w0 = Int(result.wordId[0])
         let w1 = Int(result.wordId[1])
@@ -72,7 +67,7 @@ final class Test_C2x2_LR_UD: XCTestCase {
         XCTAssertEqual(word2, "ZION")
         XCTAssertEqual(word3, "WALNUT")
         
-        print(word0, word1, word2, word3)
+        //print(word0, word1, word2, word3)
         
         let shapes = ToShape.from(cluster: result, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         
@@ -80,9 +75,9 @@ final class Test_C2x2_LR_UD: XCTestCase {
         
         let shape = shapes[0]
         
-        XCTAssertEqual(shape.width, 12)
-        XCTAssertEqual(shape.height, 10)
-        XCTAssertEqual(shape.score, 74)
+        XCTAssertEqual(shape.width, 17)
+        XCTAssertEqual(shape.height, 8)
+        XCTAssertEqual(shape.score, 104)
         XCTAssertEqual(shape.placements.count, 4)
         
         let h1 = shape.placements[0]
@@ -90,45 +85,49 @@ final class Test_C2x2_LR_UD: XCTestCase {
         let v1 = shape.placements[2]
         let v2 = shape.placements[3]
         
-        XCTAssertEqual(h1.id, 9)
+        XCTAssertEqual(h1.id, 26)
+        XCTAssertEqual(wordList[Int(h1.id)], "PARTYHATS")
         XCTAssertEqual(h1.x, 0)
         XCTAssertEqual(h1.y, 3)
         XCTAssertTrue(h1.isHorizontal)
         
-        XCTAssertEqual(h2.id, 6)
-        XCTAssertEqual(h2.x, 2)
+        XCTAssertEqual(h2.id, 47)
+        XCTAssertEqual(wordList[Int(h2.id)], "STOCKING")
+        XCTAssertEqual(h2.x, 7)
         XCTAssertEqual(h2.y, 4)
         XCTAssertTrue(h2.isHorizontal)
         
-        XCTAssertEqual(v1.id, 0)
-        XCTAssertEqual(v1.x, 3)
+        XCTAssertEqual(v1.id, 5)
+        XCTAssertEqual(wordList[Int(v1.id)], "NUTS")
+        XCTAssertEqual(v1.x, 8)
         XCTAssertEqual(v1.y, 0)
         XCTAssertFalse(v1.isHorizontal)
         
-        XCTAssertEqual(v2.id, 28)
-        XCTAssertEqual(v2.x, 4)
+        XCTAssertEqual(v2.id, 12)
+        XCTAssertEqual(wordList[Int(v2.id)], "STAR")
+        XCTAssertEqual(v2.x, 9)
         XCTAssertEqual(v2.y, 2)
         XCTAssertFalse(v2.isHorizontal)
         
-        let expected =
-            "   .        \n" +
-            "   Z        \n" +
-            "   I.       \n" +
-            ".SNOW.      \n" +
-            "  .NAZARETH.\n" +
-            "   .L       \n" +
-            "    N       \n" +
-            "    U       \n" +
-            "    T       \n" +
-            "    .       "
-
-        
-        
+        let expected = "" +
+    "        .        \n" +
+    "        N        \n" +
+    "        U.       \n" +
+    ".PARTYHATS.      \n" +
+    "       .STOCKING.\n" +
+    "        .A       \n" +
+    "         R       \n" +
+    "         .       "
         let text = DrawShape.draw(shape: shape, wordList: wordList)
-        print(("\"" + text + "\"").replacingOccurrences(of: "\n", with: "^"))
-        print(("\"" + expected + "\"").replacingOccurrences(of: "\n", with: "^"))
-        
         XCTAssertEqual(text, expected)
+        
+        if text != expected {
+            
+            print(text)
+            print(("\"" + text + "\"").replacingOccurrences(of: "\n", with: "^"))
+            print(("\"" + expected + "\"").replacingOccurrences(of: "\n", with: "^"))
+        }
+        
 
         
         //print(result)

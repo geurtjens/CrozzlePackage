@@ -21,12 +21,12 @@ final class Test_SearchableShapeModel: XCTestCase {
         
         XCTAssertEqual(shapes.count, 6)
         
-        for shape in shapes {
-            print(DrawShape.draw(shape:shape, wordList: wordList))
-        }
+//        for shape in shapes {
+//            print(DrawShape.draw(shape:shape, wordList: wordList))
+//        }
         
         let result = ToSearchableShape.from(shapes: shapes, numberOfWordsInEachShape: 6, maxWordId: wordList.count)
-        XCTAssertEqual(result.count,2)
+        XCTAssertEqual(result.count,6)
     }
  
 }

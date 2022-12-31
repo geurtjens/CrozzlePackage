@@ -8,7 +8,7 @@ public class C3x3_LMO_DMU {
         var outerStart: [UInt8] = []
         var wordId: [UInt8] = []
 
-        for phase in 0..<2 {
+       for phase in 0...1 {
             if phase == 1 {
                 wordId = Array(repeating: 0, count: stride * shapeCount)
                 outerStart = Array(repeating: 0, count: stride * shapeCount)

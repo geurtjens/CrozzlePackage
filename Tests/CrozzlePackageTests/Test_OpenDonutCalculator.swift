@@ -44,6 +44,7 @@ final class Test_OpenDonutCalculator: XCTestCase {
             heightMax: heightMax)
         print("O3x3_TopLeft: \(o3x3_TopLeft.count)")
         XCTAssertEqual(o3x3_TopLeft.count, 153820)
+        //XCTAssertEqual(o3x3_TopLeft.count, 164871)
         
         // Top right changes to bottom left so there are no duplicates
         let o3x3_TopRight = OpenDonutCalculator.TopRight(
@@ -55,8 +56,8 @@ final class Test_OpenDonutCalculator: XCTestCase {
             widthMax: widthMax,
             heightMax: heightMax)
         print("O3x3_TopRight: \(o3x3_TopRight.count)")
-        XCTAssertEqual(o3x3_TopRight.count, 247614)
-
+        //XCTAssertEqual(o3x3_TopRight.count, 247614)
+        XCTAssertEqual(o3x3_TopRight.count, 248083)
         
         let o3x3_BottomLeft = OpenDonutCalculator.BottomLeft(
             edges: edges,
@@ -94,7 +95,7 @@ final class Test_OpenDonutCalculator: XCTestCase {
         
         print("O3x4_TopLeft: \(o3x4_TopLeft.count)")
         XCTAssertEqual(o3x4_TopLeft.count, 220_148)
-
+        //XCTAssertEqual(o3x4_TopLeft.count, 198276)
         
         // Top right changes to bottom left so there are no duplicates
         let o3x4_TopRight = OpenDonutCalculator.TopRight(
@@ -119,7 +120,8 @@ final class Test_OpenDonutCalculator: XCTestCase {
             heightMax: heightMax)
         
         print("O3x4_BottomLeft: \(o3x4_BottomLeft.count)")
-        XCTAssertEqual(o3x4_BottomLeft.count, 0)
+        //XCTAssertEqual(o3x4_BottomLeft.count, 0)
+        XCTAssertEqual(o3x4_BottomLeft.count, 186873)
         let o3x4_BottomRight = OpenDonutCalculator.BottomRight(
             edges: edges,
             words: wordList,
@@ -144,6 +146,7 @@ final class Test_OpenDonutCalculator: XCTestCase {
             heightMax: heightMax)
         print("O3x5_TopLeft: \(o3x5_TopLeft.count)")
         XCTAssertEqual(o3x5_TopLeft.count, 163_938)
+        //XCTAssertEqual(o3x5_TopLeft.count, 147484)
 
         let o3x5_TopRight = OpenDonutCalculator.TopRight(
             edges: edges,
@@ -178,6 +181,21 @@ final class Test_OpenDonutCalculator: XCTestCase {
         print("O3x5_BottomRight: \(o3x5_BottomRight.count)")
         XCTAssertEqual(o3x5_BottomRight.count, 166_525)
         
+        
+        TestingUtilities.checkAllShapes(shapes: o3x3_TopLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x3_TopRight, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x3_BottomLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x3_BottomRight, wordList: wordList)
+        
+        TestingUtilities.checkAllShapes(shapes: o3x4_TopLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x4_TopRight, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x4_BottomLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x4_BottomRight, wordList: wordList)
+        
+        TestingUtilities.checkAllShapes(shapes: o3x5_TopLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x5_TopRight, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x5_BottomLeft, wordList: wordList)
+        TestingUtilities.checkAllShapes(shapes: o3x5_BottomRight, wordList: wordList)
         
     }
     
@@ -235,12 +253,17 @@ final class Test_OpenDonutCalculator: XCTestCase {
         
         let text = DrawShape.draw(shape: result[0], wordList: wordList)
         XCTAssertEqual(text, expectedText)
-        print(text)
         
-        for shape in result {
-            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
-            print(text2)
+        if text != expectedText {
+            print(text)
+            print(DrawShape.flatDraw(text: expectedText))
+            
+            print(DrawShape.flatDraw(text: text))
+            
         }
+        //print(text)
+        
+        
     }
     
     
@@ -296,19 +319,13 @@ final class Test_OpenDonutCalculator: XCTestCase {
         "  .TOYS.\n" +
         "    N   \n" +
         "    .   "
-        print(expectedText)
+        //print(expectedText)
         
         let text = DrawShape.draw(shape: result[0], wordList: wordList)
         XCTAssertEqual(text, expectedText)
-        print(text)
-        
-//        for shape in result {
-//            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
-//            print(text2)
-//        }
+        //print(text)
+    
     }
-    
-    
     
     func testTopRight() throws {
         let wordList = WordListExamples.getWordList()
@@ -363,12 +380,12 @@ final class Test_OpenDonutCalculator: XCTestCase {
         
         let text = DrawShape.draw(shape: result[0], wordList: wordList)
         XCTAssertEqual(text, expectedText)
-        print(text)
+        //print(text)
         
-        for shape in result {
-            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
-            print(text2)
-        }
+//        for shape in result {
+//            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
+//            print(text2)
+//        }
     }
     
     
@@ -430,35 +447,12 @@ final class Test_OpenDonutCalculator: XCTestCase {
         
         let text = DrawShape.draw(shape: result[0], wordList: wordList)
         XCTAssertEqual(text, expectedText)
-        print(text)
+        //print(text)
         
         
-        for shape in result {
-            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
-            print(text2)
-        }
+//        for shape in result {
+//            let text2 = DrawShape.draw(shape:shape, wordList: wordList)
+//            print(text2)
+//        }
     }
-    
-    func testExample() throws {
-        
-        let wordList = WordListExamples.getWordList()
-        
-        let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
-        
-        let result = OpenDonutCalculator.Execute(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
-

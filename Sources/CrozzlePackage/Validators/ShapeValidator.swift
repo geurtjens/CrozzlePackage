@@ -8,9 +8,35 @@
 import Foundation
 public class ShapeValidator {
     
+    public static func heightFromText(text: String) -> Int {
+        var height = 1 // We start with 1 because the last line of the height does not have an \n character
+        for letter in text {
+            if letter == "\n" {
+                height += 1
+            }
+        }
+        return height
+    }
+    
+    public static func widthFromText(text: String) -> Int {
+        var height = 1 // We start with 1 because the last line of the height does not have an \n character
+        for letter in text {
+            if letter == "\n" {
+                height += 1
+            }
+        }
+        return height
+    }
+    
     public static func Execute(shape: ShapeModel, wordList: [String]) -> Bool {
         let text = DrawShape.draw(shape: shape, wordList: wordList)
         
+        let height = heightFromText(text: text)
+        
+        if height != shape.height {
+            print("height: \(shape.height), but the text height was \(height)")
+            return false
+        }
         
         let sizeOfShape = DrawShape.sizeOfShape(width: shape.width, height: shape.height)
         

@@ -86,7 +86,7 @@ final class CrozzlePackageTests: XCTestCase {
         // We convert the edges to shapes
         let shapes = EdgeToShapeConverter.toShape(fromEdges: edges, usingWords: wordList, scoreMin: 0, widthMax:17, heightMax: 12)
         
-        XCTAssertEqual(shapes.count, 10823)
+        XCTAssertEqual(shapes.count, 10757)
     }
     
     

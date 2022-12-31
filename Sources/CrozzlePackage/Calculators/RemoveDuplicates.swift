@@ -57,21 +57,28 @@ public class RemoveDuplicates {
     }
     
     
-    public static func FilterUnique(duplicates:[Bool], wordId:[UInt8], existingSize: Int, stride:Int, uniqueSize: Int ) -> [UInt8] {
-        var result: [UInt8] = Array(repeating: 0, count: uniqueSize * stride)
-        
+    public static func FilterUnique(duplicates:[Bool], wordId:[UInt8], outerStart:[UInt8], existingSize: Int, stride:Int, uniqueSize: Int ) -> ([UInt8],[UInt8]) {
+        var wordIdResult: [UInt8] = Array(repeating: 0, count: uniqueSize * stride)
+         
+        var outerStartResult: [UInt8] = []
+        if outerStart.count > 0 {
+            outerStartResult = Array(repeating: 0, count: uniqueSize * stride)
+        }
         var destinationStart = 0
         var sourceStart = 0
         for i in 0..<existingSize {
             if duplicates[i] == false {
                 for j in 0..<stride {
-                    result[destinationStart + j] = wordId[sourceStart + j]
+                    wordIdResult[destinationStart + j] = wordId[sourceStart + j]
+                    if outerStart.count > 0 {
+                        outerStartResult[destinationStart + j] = outerStart[sourceStart + j]
+                    }
                 }
                 destinationStart += stride
             }
             sourceStart += stride
         }
-        return result
+        return (wordIdResult, outerStartResult)
     }
     
     public static func FilterUnique2(duplicates: [Bool], wordId: [UInt8], startPos: [UInt8], existingSize: Int, stride: Int, uniqueSize: Int ) -> ([UInt8], [UInt8]) {
@@ -97,14 +104,15 @@ public class RemoveDuplicates {
 
         let uniqueShapeCount = duplicates.filter { $0 == false }.count
         
-        let uniqueShapes:[UInt8] = FilterUnique(duplicates:duplicates,
+        let (uniqueWordId, uniqueOuterStart) = FilterUnique(duplicates:duplicates,
                                                 wordId: cluster.wordId,
+                                                outerStart: cluster.outerStart,
                                                 existingSize: cluster.size,
                                                 stride: cluster.stride,
                                                 uniqueSize:uniqueShapeCount)
         
-        let cluster = ClusterModel(wordId: uniqueShapes,
-                                   outerStart: [], // Not sure what to do with this exception yet
+        let cluster = ClusterModel(wordId: uniqueWordId,
+                                   outerStart: uniqueOuterStart,
                                    patternHorizontal: cluster.patternHorizontal,
                                    patternVertical: cluster.patternVertical,
                                    interlockWidth: cluster.interlockWidth,
@@ -120,14 +128,15 @@ public class RemoveDuplicates {
 
         let uniqueShapeCount = duplicates.filter { $0 == false }.count
         
-        let uniqueShapes:[UInt8] = FilterUnique(duplicates:duplicates,
+        let (uniqueWordId, uniqueOuterStart) = FilterUnique(duplicates:duplicates,
                                                 wordId: cluster.wordId,
+                                                outerStart: cluster.outerStart,
                                                 existingSize: cluster.size,
                                                 stride: cluster.stride,
                                                 uniqueSize:uniqueShapeCount)
         
-        let cluster = ClusterModel(wordId: uniqueShapes,
-                                   outerStart: [], // Not sure what to do with this exception yet
+        let cluster = ClusterModel(wordId: uniqueWordId,
+                                   outerStart: uniqueOuterStart,
                                    patternHorizontal: cluster.patternHorizontal,
                                    patternVertical: cluster.patternVertical,
                                    interlockWidth: cluster.interlockWidth,

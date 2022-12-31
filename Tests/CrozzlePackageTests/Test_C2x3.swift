@@ -189,13 +189,17 @@ final class Test_C2x3: XCTestCase {
         
         let shapes = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         
-        XCTAssertEqual(shapes.count, 80)
+        XCTAssertEqual(shapes.count, 64)
+//        for shape in shapes {
+//            let text = DrawShape.draw(shape: shape, wordList: wordList)
+//            print(text)
+//        }
         
         let shape = shapes[0]
         
-        XCTAssertEqual(shape.score,122)
-        XCTAssertEqual(shape.width, 12)
-        
+        XCTAssertEqual(shape.score,106)
+        XCTAssertEqual(shape.width, 17)
+        XCTAssertEqual(shape.height, 11)
         
         let expectedText = "" +
             "          .      \n" +

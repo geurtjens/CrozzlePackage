@@ -43,17 +43,7 @@ final class Test_DonutCalculator: XCTestCase {
             
             let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
             
-            let donutModel = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
-        }
-    }
-    
-    func test_Performance2() throws {
-        measure {
-            let wordList = WordListExamples.getWordList()
-            
-            let edges = EdgeCalculator.findValidEdges(fromWordList: wordList, scoreMin: 0, widthMax: 17, heightMax: 12)
-            
-            let donutModel = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
+            let _ = DonutCalculator.ExecuteEdges(edges: edges, wordList: wordList, interlockWidth: 3, interlockHeight: 6, scoreMin: 0, widthMax: 17, heightMax: 12)
         }
     }
 }

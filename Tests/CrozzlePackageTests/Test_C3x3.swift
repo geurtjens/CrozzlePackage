@@ -7,29 +7,41 @@
 
 import XCTest
 @testable import CrozzlePackage
-final class Test_Performance: XCTestCase {
+final class Test_C3x3: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testASDF() throws {
+    
+    
+    func test_C3x3_LMO_DMU() throws {
         let wordList = ["BEIM", "ABCD", "CFJ", "EFG",  "ZDGK", "HIJKL"]
         
         let wordModel = WordModelSOA(words: wordList)
         let wordCount = wordModel.wordCount
-        
-        let C3x3_LMO_DMU = ToShape.from(cluster: C3x3_LMO_DMU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
+        let cluster = C3x3_LMO_DMU.Execute(W: wordModel, wordCount: wordCount)
+        let C3x3_LMO_DMU = ToShape.from(cluster: cluster, wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         XCTAssertEqual(C3x3_LMO_DMU.count,1)
-        let draw = DrawShape.draw(shape: C3x3_LMO_DMU[0], wordList: wordList)
-        print(draw)
+        let text = DrawShape.draw(shape: C3x3_LMO_DMU[0], wordList: wordList)
         
+        
+        let expectedText = "" +
+        "    .  \n" +
+        "  ..Z  \n" +
+        ".ABCD. \n" +
+        " .EFG. \n" +
+        ".HIJKL.\n" +
+        "  M..  \n" +
+        "  .    "
+        
+        
+        XCTAssertEqual(expectedText, text)
+        
+        if expectedText != text {
+            print(text)
+            print(DrawShape.flatDraw(text: expectedText))
+            print(DrawShape.flatDraw(text: text))
+        }
     }
-    func testExample() throws {
+    
+    func testC2x3_RLR_MO() throws {
         
         let wordList = WordListExamples.getWordList()
         let wordModel = WordModelSOA(words: wordList)
@@ -200,9 +212,12 @@ final class Test_Performance: XCTestCase {
         
         let C3x3_MOM_UMO = ToShape.from(cluster: C3x3_MOM_UMO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         
-        let count = C3x3_MOM_DMO + C3x3_MOM_DMU + C3x3_MOM_DUD + C3x3_MOM_MOM + C3x3_MOM_OMD + C3x3_MOM_OMO + C3x3_MOM_OMU + C3x3_MOM_UDU + C3x3_MOM_UMD + C3x3_MOM_UMO
+        let shapes = C3x3_MOM_DMO + C3x3_MOM_DMU + C3x3_MOM_DUD + C3x3_MOM_MOM + C3x3_MOM_OMD + C3x3_MOM_OMO + C3x3_MOM_OMU + C3x3_MOM_UDU + C3x3_MOM_UMD + C3x3_MOM_UMO
         
-        XCTAssertEqual(count.count,0)
+        XCTAssertEqual(shapes.count,1)
+        let shape = shapes[0]
+        let text = DrawShape.draw(shape: shape, wordList: wordList)
+        print(text)
     }
     
     func test2x2() throws {
@@ -260,9 +275,9 @@ final class Test_Performance: XCTestCase {
         let wordModel = WordModelSOA(words: wordList)
         let result = C3x3.Execute(w: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         XCTAssertEqual(result.count, 9)
-        for shape in result {
-            print(DrawShape.draw(shape: shape, wordList: wordList))
-        }
+//        for shape in result {
+//            print(DrawShape.draw(shape: shape, wordList: wordList))
+//        }
     }
     
     func test3x4() throws {
@@ -271,9 +286,9 @@ final class Test_Performance: XCTestCase {
         let result = C3x4.Execute(w: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         XCTAssertEqual(result.count, 2)
         
-        for shape in result {
-            print(DrawShape.draw(shape: shape, wordList: wordList))
-        }
+//        for shape in result {
+//            print(DrawShape.draw(shape: shape, wordList: wordList))
+//        }
     }
     
     func test3x5() throws {
@@ -281,9 +296,9 @@ final class Test_Performance: XCTestCase {
         let wordModel = WordModelSOA(words: wordList)
         let result = C3x5.Execute(w: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         XCTAssertEqual(result.count, 0)
-        for shape in result {
-            print(DrawShape.draw(shape: shape, wordList: wordList))
-        }
+//        for shape in result {
+//            print(DrawShape.draw(shape: shape, wordList: wordList))
+//        }
     }
     
     func test3x6() throws {
@@ -291,12 +306,12 @@ final class Test_Performance: XCTestCase {
         let wordModel = WordModelSOA(words: wordList)
         let result = C3x6.Execute(w: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         XCTAssertEqual(result.count, 0)
-        for shape in result {
-            print(DrawShape.draw(shape: shape, wordList: wordList))
-        }
+//        for shape in result {
+//            print(DrawShape.draw(shape: shape, wordList: wordList))
+//        }
     }
     
-    func testPerformanceExample() throws {
+    func testManyOfThem() throws {
         // This is an example of a performance test case.
         	    
         let wordList = WordListExamples.getWordList()
@@ -385,34 +400,11 @@ final class Test_Performance: XCTestCase {
         let C3x4_LRLR_UDU = ToShape.from(cluster:C3x4_LRLR_UDU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         print("C3x4_LRLR_UDU = \(C3x4_LRLR_UDU.count)")
         
-        
-//        let C3x5_RLRLR_DUD = ToShape.from(cluster:C3x5_RLRLR_DUD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-//        print("C3x5_RLRLR_DUD = \(C3x5_RLRLR_DUD.count)")
-//
-//        let C3x5_RLRLR_UDU = ToShape.from(cluster:C3x5_RLRLR_UDU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-//        print("C3x5_RLRLR_UDU = \(C3x5_RLRLR_UDU.count)")
-//
-//        let C3x5_LRLRL_DUD = ToShape.from(cluster:C3x5_LRLRL_DUD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-//        print("C3x5_LRLRL_DUD = \(C3x5_LRLRL_DUD.count)")
-//
-//        let C3x5_LRLRL_UDU = ToShape.from(cluster:C3x5_LRLRL_UDU.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-//        print("C3x5_LRLRL_UDU = \(C3x5_LRLRL_UDU.count)")
-//
-        
-        
+   
         print("NOW THE SPECIAL ONES")
-        
-        
+ 
         let C3x4_LRML_DUD = ToShape.from(cluster:C3x4_LRML_DUD.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         print("C3x4_LRML_DUD = \(C3x4_LRML_DUD.count)")
-        
-        
-        
-        
-        
-        
-        
-        
         
         let C2x3_LRL_MO = ToShape.from(cluster:C2x3_LRL_MO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         print("C2x3_LRL_MO = \(C2x3_LRL_MO.count)")
@@ -420,18 +412,7 @@ final class Test_Performance: XCTestCase {
         let C2x3_LRL_OM = ToShape.from(cluster:C2x3_LRL_OM.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         print("C2x3_LRL_OM = \(C2x3_LRL_OM.count)")
         
-        
-        
-        
-        
         let C2x3_RLR_MO = ToShape.from(cluster:C2x3_RLR_MO.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
         print("C2x3_RLR_MO = \(C2x3_RLR_MO.count)")
-        
-        // The MO and OM processes are not working yet
-        //print(DrawShape.draw(shape: C2x3_RLR_MO[0], wordList: wordList))
-        //print(DrawShape.draw(shape: C2x3_RLR_MO[1], wordList: wordList))
-       // let C2x3_RLR_OM = ToShape.from(cluster:C2x3_RLR_OM.Execute(W: wordModel, wordCount: wordCount), wordList: wordModel, scoreMin: 0, widthMax: 17, heightMax: 12)
-        //print("C2x3_RLR_OM = \(C2x3_RLR_OM.count)")
     }
-
 }

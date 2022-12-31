@@ -70,6 +70,10 @@ public class DrawShape {
         return String(result)
     }
     
+    public static func flatDraw(text: String) -> String {
+        return ("\"" + text + "\"").replacingOccurrences(of: "\n", with: "^")
+    }
+    
     /// Create an array that is the right size to hold the shape and place end of line characters where they need to be
     /// - Parameters:
     ///   - width: width of shape
