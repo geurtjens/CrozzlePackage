@@ -7,10 +7,9 @@
 
 import Foundation
 
-struct OpenDonutCalculator {
+public struct OpenDonutCalculator {
     
-    
-    static func Execute(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel] {
+    public static func Execute(edges: [EdgeModel], words: [String], interlockWidth: Int, interlockHeight: Int, scoreMin: UInt16, widthMax: UInt8, heightMax: UInt8) -> [ShapeModel] {
         
         let topLeftShapes = TopLeft(edges: edges, words: words, interlockWidth: interlockWidth, interlockHeight: interlockHeight, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)
         
