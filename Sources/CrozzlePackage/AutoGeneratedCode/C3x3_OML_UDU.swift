@@ -1,5 +1,5 @@
 public class C3x3_OML_UDU {
-   static func Execute(W: WordModelSOA, wordCount: Int) -> ClusterModel {
+   public static func Execute(W: WordModelSOA, wordCount: Int) -> ClusterModel {
         let interlockWidth = 3
         let interlockHeight = 3
         let stride = interlockWidth + interlockHeight

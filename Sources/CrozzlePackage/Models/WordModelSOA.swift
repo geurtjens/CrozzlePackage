@@ -37,7 +37,7 @@ public struct WordModelSOA {
     /// The words are still laid out by their sequence but the letters per word have been reversed.  So ZION forward will have NOIZ backwards
     public let EndsWith:[UInt8]
     
-    init(words:[String]) {
+    public init(words:[String]) {
         
         let _wordCount = words.count
         

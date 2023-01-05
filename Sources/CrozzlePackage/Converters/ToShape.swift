@@ -27,7 +27,7 @@ public class ToShape {
         let (width, leadingWidth) = calculateWidth(cluster: cluster, wordLength: wordList.Len)
         let (height, leadingHeight) = calculateHeight(cluster: cluster, wordModel: wordList)
         let score = scoreShape(cluster: cluster, wordList: wordList.Start)
-        let (startX,startY) = calculateXY(cluster:cluster, wordLength: wordList.Len, leadingWidthArray:leadingWidth, leadingHeightArray:leadingHeight)
+        let (startX,startY) = calculateXY(cluster:cluster, words: wordList.Start, wordLength: wordList.Len, leadingWidthArray:leadingWidth, leadingHeightArray:leadingHeight)
         let isHorizontal = calculateIsHorizontal(cluster:cluster)
         
         let result = GpuShapeModel(stride: UInt8(cluster.stride), count: cluster.size, score: score, width: width, height: height, id: cluster.wordId, x:startX, y: startY, isHorizontal: isHorizontal)
@@ -53,7 +53,7 @@ public class ToShape {
     
     
     
-    public static func calculateXY(cluster: ClusterModel, wordLength: [UInt8], leadingWidthArray:[UInt8], leadingHeightArray:[UInt8]) -> ([UInt8], [UInt8]) {
+    public static func calculateXY(cluster: ClusterModel, words: [String], wordLength: [UInt8], leadingWidthArray:[UInt8], leadingHeightArray:[UInt8]) -> ([UInt8], [UInt8]) {
         
         
         let verticalWordCount = cluster.interlockWidth
@@ -72,13 +72,37 @@ public class ToShape {
             let leadingWidth = leadingWidthArray[shapeId]
             let leadingHeight = leadingHeightArray[shapeId]
             
+            
+            // Start of debugging code
+//            var verticalWords: [String] = []
+//            for z in 0..<verticalWordCount {
+//                let wordPos = cluster.wordPosY(shapeId:shapeId, i:z)
+//
+//                let wordId = Int(cluster.wordId[wordPos])
+//
+//                let word = words[wordId]
+//                verticalWords.append(word)
+//            }
+//            var horizontalWords: [String] = []
+//            for k in 0..<horizontalWordCount_ {
+//
+//                let wordPos = cluster.wordPosX(shapeId:shapeId, i:k)
+//
+//                let wordId = Int(cluster.wordId[wordPos])
+//
+//                let word = words[wordId]
+//                horizontalWords.append(word)
+//            }
+            // End of debugging code
+            
+            
+            
             // First we do the vertical words
             for i in 0..<verticalWordCount {
                 let wordPos = cluster.wordPosY(shapeId:shapeId, i:i)
                 
                 let wordId = Int(cluster.wordId[wordPos])
                 
-                //let word = wordList[wordId]
                 let wordSize = wordLength[wordId]
                 let pattern = cluster.patternVertical[i]
                 
@@ -105,7 +129,6 @@ public class ToShape {
                 
                 let wordId = Int(cluster.wordId[wordPos])
                 
-                //let word = wordList[wordId]
                 let wordSize = wordLength[wordId]
                 let pattern = cluster.patternHorizontal[i]
                 
@@ -117,7 +140,8 @@ public class ToShape {
                     startX[wordPos] = leadingWidth
                 case.outer:
                     let startPos = cluster.outerStart[wordPos]
-                    startX[wordPos] = UInt8(leadingWidth + UInt8(startPos) - overlap )
+                    // What is the x when you are an overlap, is it not the outerStart in this situation
+                    startX[wordPos] = leadingWidth - startPos //UInt8(leadingWidth + UInt8(startPos) - overlap )
                 }
                 startY[wordPos] = leadingHeight + UInt8(i) + 1 // We need plus 1 to account for the blocking character .
             }
