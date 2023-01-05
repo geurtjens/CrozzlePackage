@@ -14,7 +14,7 @@ public class ToShape {
         
         let filteredShapes = GpuShapeToShapeConverter.filter(shapes: shapes, scoreMin: scoreMin, widthMax: widthMax, heightMax: heightMax)
         
-        let sorted = filteredShapes.sorted { $0.score > $1.score}
+        let sorted = filteredShapes.sorted { $0.s > $1.s}
         
         
         

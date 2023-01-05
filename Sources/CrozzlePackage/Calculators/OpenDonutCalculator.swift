@@ -22,7 +22,7 @@ public struct OpenDonutCalculator {
         
         let shapes = bottomLeftShapes + bottomRightShapes + topLeftShapes + topRightShapes
         
-        return shapes.sorted { $0.score > $1.score }
+        return shapes.sorted { $0.s > $1.s }
         
     }
     
@@ -113,10 +113,10 @@ public struct OpenDonutCalculator {
                                 if isDuplicate == false {
                                     
                                     let shape = ShapeModel(
-                                        score: score,
-                                        width: width,
-                                        height: height,
-                                        placements: [
+                                        s: score,
+                                        w: width,
+                                        h: height,
+                                        p: [
                                             PlacementModel(
                                                 id: topRightEdge.h,
                                                 x: xMax - topPos,
@@ -239,10 +239,10 @@ public struct OpenDonutCalculator {
                                 if isDuplicate == false {
                                     
                                     let shape = ShapeModel(
-                                        score: score,
-                                        width: width,
-                                        height: height,
-                                        placements: [
+                                        s: score,
+                                        w: width,
+                                        h: height,
+                                        p: [
                                             PlacementModel(
                                                 id: topRightEdge.h,
                                                 x: bottomPos + 1, // made it bottomPos
@@ -338,10 +338,10 @@ public struct OpenDonutCalculator {
                             if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
                                 
                                 let shape = ShapeModel(
-                                    score: score,
-                                    width: width,
-                                    height: height,
-                                    placements: [
+                                    s: score,
+                                    w: width,
+                                    h: height,
+                                    p: [
                                         PlacementModel(
                                             id: topLeftEdge.h,
                                             x: 0,
@@ -425,10 +425,10 @@ public struct OpenDonutCalculator {
                             if ((width <= widthMax && height <= heightMax) || (height <= widthMax && width <= heightMax)) {
                                 
                                 let shape = ShapeModel(
-                                    score: score,
-                                    width: width,
-                                    height: height,
-                                    placements: [
+                                    s: score,
+                                    w: width,
+                                    h: height,
+                                    p: [
                                         PlacementModel(
                                             id: topLeftEdge.h,
                                             x: xMax - topPos,

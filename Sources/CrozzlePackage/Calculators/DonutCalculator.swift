@@ -114,10 +114,10 @@ public class DonutCalculator {
                                 if isDuplicate == false {
                                     
                                     let shape = ShapeModel(
-                                        score: score,
-                                        width: width,
-                                        height: height,
-                                        placements: [
+                                        s: score,
+                                        w: width,
+                                        h: height,
+                                        p: [
                                             PlacementModel(
                                                 id: UInt8(topId),
                                                 x: maxHorizontalStart - topPos, // made it bottomPos

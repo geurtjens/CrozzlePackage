@@ -10,7 +10,7 @@ public class GpuShapeToShapeConverter {
     
     
     public static func filter(shapes: [ShapeModel], scoreMin: Int, widthMax: Int, heightMax: Int) -> [ShapeModel] {
-        return shapes.filter { $0.score >= scoreMin && ($0.width <= widthMax && $0.height <= heightMax) || ($0.width <= heightMax && $0.height <= widthMax)}
+        return shapes.filter { $0.s >= scoreMin && ($0.w <= widthMax && $0.h <= heightMax) || ($0.w <= heightMax && $0.h <= widthMax)}
     }
     
     public static func shapeCreation(gpuShape: GpuShapeModel, wordList: [String]) -> [ShapeModel] {
@@ -34,10 +34,10 @@ public class GpuShapeToShapeConverter {
                 placements.append(placement)
             }
             let shape = ShapeModel(
-                score: gpuShape.score[shapeId],
-                width: gpuShape.width[shapeId],
-                height: gpuShape.height[shapeId],
-                placements: placements
+                s: gpuShape.score[shapeId],
+                w: gpuShape.width[shapeId],
+                h: gpuShape.height[shapeId],
+                p: placements
             )
             shapes.append(shape)
         }

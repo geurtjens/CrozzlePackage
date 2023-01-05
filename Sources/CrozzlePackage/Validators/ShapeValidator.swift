@@ -33,12 +33,12 @@ public class ShapeValidator {
         
         let height = heightFromText(text: text)
         
-        if height != shape.height {
-            print("height: \(shape.height), but the text height was \(height)")
+        if height != shape.h {
+            print("height: \(shape.h), but the text height was \(height)")
             return false
         }
         
-        let sizeOfShape = DrawShape.sizeOfShape(width: shape.width, height: shape.height)
+        let sizeOfShape = DrawShape.sizeOfShape(width: shape.w, height: shape.h)
         
         if text.count != sizeOfShape {
             print("size of shape wrong")
@@ -46,10 +46,10 @@ public class ShapeValidator {
         }
         // For each placement check that the valid word is within the text
         
-        for placement in shape.placements {
+        for placement in shape.p {
             let word = wordList[Int(placement.id)]
             // This is where the word should start
-            let startingLocation = DrawShape.getLocation(x: placement.x, y: placement.y, width: shape.width)
+            let startingLocation = DrawShape.getLocation(x: placement.x, y: placement.y, width: shape.w)
             
             if text[startingLocation] != "." {
                 print("start of word \(word) invalid, expecting '.' found '\(text[startingLocation]).")
@@ -73,7 +73,7 @@ public class ShapeValidator {
             } else {
                 for i in 0..<word.count {
                     
-                    let textPos = DrawShape.getLocation(x: placement.x,y: placement.y + UInt8(i) + 1,width: shape.width)
+                    let textPos = DrawShape.getLocation(x: placement.x,y: placement.y + UInt8(i) + 1,width: shape.w)
                     if text[textPos] != word[i] {
                         print("vertical word '\(word)' has letter position \(i) invalid expecting '\(word[i])' found '\(text[textPos])'.")
                         return false
@@ -81,7 +81,7 @@ public class ShapeValidator {
                     
                     
                 }
-                let lastPos = DrawShape.getLocation(x: placement.x, y: placement.y + UInt8(word.count + 1), width: shape.width)
+                let lastPos = DrawShape.getLocation(x: placement.x, y: placement.y + UInt8(word.count + 1), width: shape.w)
                 
                 if text[lastPos] != "." {
                     print("end of vertical word '\(word) invalid, expecting '.', found '\(text[lastPos])'.")

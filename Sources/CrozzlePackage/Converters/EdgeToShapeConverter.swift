@@ -18,7 +18,7 @@ public class EdgeToShapeConverter {
         
         let allShapes = shapes + shapesReversed
         
-        let sorted = allShapes.sorted { $0.score > $1.score}
+        let sorted = allShapes.sorted { $0.s > $1.s}
         
         return sorted
     }
@@ -44,10 +44,10 @@ public class EdgeToShapeConverter {
             if score >= scoreMin && ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
                 
                 let shape = ShapeModel(
-                    score: UInt16(score),
-                    width:width,
-                    height:height,
-                    placements: [
+                    s: UInt16(score),
+                    w:width,
+                    h:height,
+                    p: [
                         PlacementModel(
                             id: edge.h,
                             x: 0,
@@ -80,10 +80,10 @@ public class EdgeToShapeConverter {
         if score >= scoreMin && ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
             
             let shape = ShapeModel(
-                score: UInt16(score),
-                width:width,
-                height:height,
-                placements: [
+                s: UInt16(score),
+                w:width,
+                h:height,
+                p: [
                     PlacementModel(
                         id: edge.h,
                         x: 0,
@@ -119,10 +119,10 @@ public class EdgeToShapeConverter {
             if score >= scoreMin && ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
                 
                 let shape = ShapeModel(
-                    score: UInt16(score),
-                    width:width,
-                    height:height,
-                    placements: [
+                    s: UInt16(score),
+                    w:width,
+                    h:height,
+                    p: [
                         PlacementModel(
                             id: edge.v,
                             x: 0,

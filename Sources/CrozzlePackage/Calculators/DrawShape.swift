@@ -17,17 +17,17 @@ public class DrawShape {
     /// - Returns: Creates a string which accurately represents the shape as it could be rendered in a grid apart from having the end of line characters in it.
     public static func draw(shape: ShapeModel, wordList:[String]) -> String {
         
-        var result = getInitialShape(width: shape.width, height: shape.height)
+        var result = getInitialShape(width: shape.w, height: shape.h)
         // Then we place each character and convert the array into a string somehow
         
-        let horizontalPlacements = shape.placements.filter { $0.isHorizontal == true}
-        let verticalPlacements = shape.placements.filter {$0.isHorizontal == false}
+        let horizontalPlacements = shape.p.filter { $0.isHorizontal == true}
+        let verticalPlacements = shape.p.filter {$0.isHorizontal == false}
         for placement in horizontalPlacements {
             
             let startingLocation = getLocation(
                 x: placement.x,
                 y: placement.y,
-                width: shape.width)
+                width: shape.w)
             
             
             result[startingLocation] = "."
@@ -45,7 +45,7 @@ public class DrawShape {
             let startingLocation = getLocation(
                 x: placement.x,
                 y: placement.y,
-                width: shape.width)
+                width: shape.w)
             
             result[startingLocation] = "."
             
@@ -54,7 +54,7 @@ public class DrawShape {
                 let location = getLocation(
                     x: placement.x,
                     y: placement.y + UInt8(i) + 1,
-                    width: shape.width)
+                    width: shape.w)
                 result[location] = word[i]
             
                 
@@ -62,7 +62,7 @@ public class DrawShape {
             let lastLocation = getLocation(
                 x: placement.x,
                 y: placement.y + UInt8(word.count + 1),
-                width: shape.width)
+                width: shape.w)
             
             result[lastLocation] = "."
         }

@@ -197,9 +197,9 @@ final class Test_C2x3: XCTestCase {
         
         let shape = shapes[0]
         
-        XCTAssertEqual(shape.score,106)
-        XCTAssertEqual(shape.width, 17)
-        XCTAssertEqual(shape.height, 11)
+        XCTAssertEqual(shape.s,106)
+        XCTAssertEqual(shape.w, 17)
+        XCTAssertEqual(shape.h, 11)
         
         let expectedText = "" +
             "          .      \n" +
@@ -219,12 +219,12 @@ final class Test_C2x3: XCTestCase {
             let text = DrawShape.draw(shape: shape, wordList: wordList)
             XCTAssertEqual(text, expectedText)
         
-            let h1 = Int(shape.placements[0].id)
-            let h2 = Int(shape.placements[1].id)
-            let h3 = Int(shape.placements[2].id)
+            let h1 = Int(shape.p[0].id)
+            let h2 = Int(shape.p[1].id)
+            let h3 = Int(shape.p[2].id)
             
-            let v1 = Int(shape.placements[3].id)
-            let v2 = Int(shape.placements[4].id)
+            let v1 = Int(shape.p[3].id)
+            let v2 = Int(shape.p[4].id)
             
             let hword1 = wordList[h1]
             let hword2 = wordList[h2]

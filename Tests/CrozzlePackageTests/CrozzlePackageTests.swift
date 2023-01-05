@@ -34,14 +34,14 @@ final class CrozzlePackageTests: XCTestCase {
         
         let shape = shapes[0]
         
-        XCTAssertEqual(shape.score, 84)
-        XCTAssertEqual(shape.width, 6)
-        XCTAssertEqual(shape.height, 7)
+        XCTAssertEqual(shape.s, 84)
+        XCTAssertEqual(shape.w, 6)
+        XCTAssertEqual(shape.h, 7)
         
         // Edges have only 2 words so all arrays holding words should be a size of 2
-        XCTAssertEqual(2, shape.placements.count)
+        XCTAssertEqual(2, shape.p.count)
         
-        let a = shape.placements[0]
+        let a = shape.p[0]
         let word1 = wordList[Int(a.id)]
         
         XCTAssertEqual(a.id, 0)
@@ -51,7 +51,7 @@ final class CrozzlePackageTests: XCTestCase {
         XCTAssertTrue(a.isHorizontal)
         
         
-        let b = shape.placements[1]
+        let b = shape.p[1]
         let word2 = wordList[Int(b.id)]
         
         XCTAssertEqual(b.id, 1)

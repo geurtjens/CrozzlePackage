@@ -75,15 +75,15 @@ final class Test_C2x2_LR_UD: XCTestCase {
         
         let shape = shapes[0]
         
-        XCTAssertEqual(shape.width, 17)
-        XCTAssertEqual(shape.height, 8)
-        XCTAssertEqual(shape.score, 104)
-        XCTAssertEqual(shape.placements.count, 4)
+        XCTAssertEqual(shape.w, 17)
+        XCTAssertEqual(shape.h, 8)
+        XCTAssertEqual(shape.s, 104)
+        XCTAssertEqual(shape.p.count, 4)
         
-        let h1 = shape.placements[0]
-        let h2 = shape.placements[1]
-        let v1 = shape.placements[2]
-        let v2 = shape.placements[3]
+        let h1 = shape.p[0]
+        let h2 = shape.p[1]
+        let v1 = shape.p[2]
+        let v2 = shape.p[3]
         
         XCTAssertEqual(h1.id, 26)
         XCTAssertEqual(wordList[Int(h1.id)], "PARTYHATS")

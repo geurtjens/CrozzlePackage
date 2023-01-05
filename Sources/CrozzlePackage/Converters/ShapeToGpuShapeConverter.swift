@@ -40,15 +40,15 @@ public class ShapeToGpuShapeConverter {
             let shape = shapes[shapeId]
             
             // These are populating the arrays that have one value per shape
-            width[shapeId] = shape.width
-            height[shapeId] = shape.height
-            score[shapeId] = shape.score
+            width[shapeId] = shape.w
+            height[shapeId] = shape.h
+            score[shapeId] = shape.s
             
             for wordId in 0..<wordCount {
                 // We continue to increase the word pos to place them into the arrays that require one value per word
                 wordPos += 1
                 
-                let placement = shape.placements[Int(wordId)]
+                let placement = shape.p[Int(wordId)]
                 id[wordPos] = placement.id
                 
                 x[wordPos] = placement.x

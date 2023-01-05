@@ -15,7 +15,7 @@ final class Test_DrawShape: XCTestCase {
     
     func test_draw() throws {
         
-        let shape = ShapeModel(score: 84, width: 6, height: 7, placements: [
+        let shape = ShapeModel(s: 84, w: 6, h: 7, p: [
             PlacementModel(id: 0, x: 0, y: 2, isHorizontal: true),
             PlacementModel(id: 1, x: 1, y: 0, isHorizontal: false)
         ] )

@@ -24,7 +24,7 @@ class ToSearchableShape {
         var y: [UInt8] = Array(repeating: 0, count: wordCount)
         var isHorizontal: [Bool] = Array(repeating: true, count: wordCount)
         
-        let shapesSorted = shapes.sorted { $0.score > $1.score}
+        let shapesSorted = shapes.sorted { $0.s > $1.s}
         
         // When you see a word in a location then add that to the dictionary of locations that this word appears
         var wordIndex: [UInt8: [Int]] = [:]
@@ -33,11 +33,11 @@ class ToSearchableShape {
         for shapeId in 0..<shapesSorted.count {
             let shape = shapesSorted[shapeId]
             
-            width[shapeId] = shape.width
-            height[shapeId] = shape.height
-            score[shapeId] = shape.score
+            width[shapeId] = shape.w
+            height[shapeId] = shape.h
+            score[shapeId] = shape.s
             
-            let placements = shape.placements.sorted { $0.id < $1.id }
+            let placements = shape.p.sorted { $0.id < $1.id }
             
             for placementId in 0..<placements.count {
                 let placement = placements[placementId]

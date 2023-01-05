@@ -207,33 +207,33 @@ final class Test_OpenDonutCalculator: XCTestCase {
         let result = OpenDonutCalculator.TopLeft(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
         
         let shape = result[0]
-        XCTAssertEqual(shape.width, 9)
-        XCTAssertEqual(shape.height, 7)
-        XCTAssertEqual(shape.score, 144)
-        XCTAssertEqual(shape.placements.count,4)
+        XCTAssertEqual(shape.w, 9)
+        XCTAssertEqual(shape.h, 7)
+        XCTAssertEqual(shape.s, 144)
+        XCTAssertEqual(shape.p.count,4)
         
-        let top = shape.placements[0]
+        let top = shape.p[0]
         XCTAssertEqual(wordList[Int(top.id)], "AZURE")
         XCTAssertEqual(top.id, 1)
         XCTAssertEqual(top.x, 2)
         XCTAssertEqual(top.y, 1)
         XCTAssertTrue(top.isHorizontal)
         
-        let bottom = shape.placements[1]
+        let bottom = shape.p[1]
         XCTAssertEqual(wordList[Int(bottom.id)], "HYMN")
         XCTAssertEqual(bottom.id, 7)
         XCTAssertEqual(bottom.x, 0)
         XCTAssertEqual(bottom.y, 4)
         XCTAssertTrue(bottom.isHorizontal)
         
-        let left = shape.placements[2]
+        let left = shape.p[2]
         XCTAssertEqual(wordList[Int(left.id)], "TOYS")
         XCTAssertEqual(left.id, 2)
         XCTAssertEqual(left.x, 2)
         XCTAssertEqual(left.y, 1)
         XCTAssertFalse(left.isHorizontal)
         
-        let right = shape.placements[3]
+        let right = shape.p[3]
         XCTAssertEqual(wordList[Int(right.id)], "ZION")
         XCTAssertEqual(right.id, 0)
         XCTAssertEqual(right.x, 4)
@@ -275,33 +275,33 @@ final class Test_OpenDonutCalculator: XCTestCase {
         let result = OpenDonutCalculator.BottomLeft(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
         
         let shape = result[0]
-        XCTAssertEqual(shape.width, 8)
-        XCTAssertEqual(shape.height, 10)
-        XCTAssertEqual(shape.score, 60)
-        XCTAssertEqual(shape.placements.count,4)
+        XCTAssertEqual(shape.w, 8)
+        XCTAssertEqual(shape.h, 10)
+        XCTAssertEqual(shape.s, 60)
+        XCTAssertEqual(shape.p.count,4)
         
-        let top = shape.placements[0]
+        let top = shape.p[0]
         XCTAssertEqual(wordList[Int(top.id)], "ZION")
         XCTAssertEqual(top.id, 0)
         XCTAssertEqual(top.x, 0)
         XCTAssertEqual(top.y, 4)
         XCTAssertTrue(top.isHorizontal)
         
-        let bottom = shape.placements[1]
+        let bottom = shape.p[1]
         XCTAssertEqual(wordList[Int(bottom.id)], "TOYS")
         XCTAssertEqual(bottom.id, 2)
         XCTAssertEqual(bottom.x, 2)
         XCTAssertEqual(bottom.y, 7)
         XCTAssertTrue(bottom.isHorizontal)
         
-        let left = shape.placements[2]
+        let left = shape.p[2]
         XCTAssertEqual(wordList[Int(left.id)], "FAMILY")
         XCTAssertEqual(left.id, 15)
         XCTAssertEqual(left.x, 2)
         XCTAssertEqual(left.y, 0)
         XCTAssertFalse(left.isHorizontal)
         
-        let right = shape.placements[3]
+        let right = shape.p[3]
         XCTAssertEqual(wordList[Int(right.id)], "CINNAMON")
         XCTAssertEqual(right.id, 65)
         XCTAssertEqual(right.x, 4)
@@ -336,33 +336,33 @@ final class Test_OpenDonutCalculator: XCTestCase {
         let result = OpenDonutCalculator.TopRight(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
         
         let shape = result[0]
-        XCTAssertEqual(shape.width, 13)
-        XCTAssertEqual(shape.height, 7)
-        XCTAssertEqual(shape.score, 144)
-        XCTAssertEqual(shape.placements.count,4)
+        XCTAssertEqual(shape.w, 13)
+        XCTAssertEqual(shape.h, 7)
+        XCTAssertEqual(shape.s, 144)
+        XCTAssertEqual(shape.p.count,4)
         
-        let top = shape.placements[0]
+        let top = shape.p[0]
         XCTAssertEqual(wordList[Int(top.id)], "GLAZE")
         XCTAssertEqual(top.id, 25)
         XCTAssertEqual(top.x, 0)
         XCTAssertEqual(top.y, 1)
         XCTAssertTrue(top.isHorizontal)
         
-        let bottom = shape.placements[1]
+        let bottom = shape.p[1]
         XCTAssertEqual(wordList[Int(bottom.id)], "TWENTYFIFTH")
         XCTAssertEqual(bottom.id, 27)
         XCTAssertEqual(bottom.x, 0)
         XCTAssertEqual(bottom.y, 4)
         XCTAssertTrue(bottom.isHorizontal)
         
-        let left = shape.placements[2]
+        let left = shape.p[2]
         XCTAssertEqual(wordList[Int(left.id)], "ZION")
         XCTAssertEqual(left.id, 0)
         XCTAssertEqual(left.x, 4)
         XCTAssertEqual(left.y, 0)
         XCTAssertFalse(left.isHorizontal)
         
-        let right = shape.placements[3]
+        let right = shape.p[3]
         XCTAssertEqual(wordList[Int(right.id)], "TOYS")
         XCTAssertEqual(right.id, 2)
         XCTAssertEqual(right.x, 6)
@@ -398,33 +398,33 @@ final class Test_OpenDonutCalculator: XCTestCase {
         let result = OpenDonutCalculator.BottomRight(edges: edges, words: wordList, interlockWidth: 3, interlockHeight: 4, scoreMin: 0, widthMax: 17, heightMax: 12)
         
         let shape = result[0]
-        XCTAssertEqual(shape.width, 10)
-        XCTAssertEqual(shape.height, 10)
-        XCTAssertEqual(shape.score, 54)
-        XCTAssertEqual(shape.placements.count,4)
+        XCTAssertEqual(shape.w, 10)
+        XCTAssertEqual(shape.h, 10)
+        XCTAssertEqual(shape.s, 54)
+        XCTAssertEqual(shape.p.count,4)
         
-        let top = shape.placements[0]
+        let top = shape.p[0]
         XCTAssertEqual(wordList[Int(top.id)], "FAMILY")
         XCTAssertEqual(top.id, 15)
         XCTAssertEqual(top.x, 2)
         XCTAssertEqual(top.y, 2)
         XCTAssertTrue(top.isHorizontal)
         
-        let bottom = shape.placements[1]
+        let bottom = shape.p[1]
         XCTAssertEqual(wordList[Int(bottom.id)], "AZURE")
         XCTAssertEqual(bottom.id, 1)
         XCTAssertEqual(bottom.x, 0)
         XCTAssertEqual(bottom.y, 5)
         XCTAssertTrue(bottom.isHorizontal)
         
-        let left = shape.placements[2]
+        let left = shape.p[2]
         XCTAssertEqual(wordList[Int(left.id)], "NAZARETH")
         XCTAssertEqual(left.id, 6)
         XCTAssertEqual(left.x, 4)
         XCTAssertEqual(left.y, 0)
         XCTAssertFalse(left.isHorizontal)
         
-        let right = shape.placements[3]
+        let right = shape.p[3]
         XCTAssertEqual(wordList[Int(right.id)], "ZION")
         XCTAssertEqual(right.id, 0)
         XCTAssertEqual(right.x, 6)

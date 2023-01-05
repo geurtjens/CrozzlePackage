@@ -71,10 +71,10 @@ public class DonutToShapeConverter {
                 if ((width <= widthMax && height <= heightMax) || (width <= heightMax && height <= widthMax)) {
                     
                     let shape = ShapeModel(
-                        score: UInt16(score),
-                        width: UInt8(width),
-                        height: UInt8(height),
-                        placements: [
+                        s: UInt16(score),
+                        w: UInt8(width),
+                        h: UInt8(height),
+                        p: [
                             PlacementModel(
                                 id: topId,
                                 x: UInt8(maxHorizontalPos - topPos),
@@ -104,7 +104,7 @@ public class DonutToShapeConverter {
             wordIndex += 4
         }
         
-        result.sort { $0.score > $1.score}
+        result.sort { $0.s > $1.s}
         
         return result
     }
