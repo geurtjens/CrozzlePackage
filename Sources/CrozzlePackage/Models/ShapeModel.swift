@@ -21,7 +21,7 @@ public struct ShapeModel {
     /// The words and how they should be placed into the grid according to the local coordinate system of the shape
     public let p: [PlacementModel]
     
-    public func ToString() -> String {
+    public func ToJson() -> String {
         var placements = ""
         for placement in p {
             if placements != "" {
@@ -37,6 +37,23 @@ public struct ShapeModel {
             
         }
         let result = "{\"s\":\(s),\"w\":\(w),\"h\":\(h),\"p\":[" + placements + "]}"
+        return result
+    }
+    public func ToCsv() -> String {
+        var placements = ""
+        for placement in p {
+            if placements != "" {
+                placements += ","
+            }
+            
+            var isHorizontal = 0
+            if placement.isHorizontal == true {
+                isHorizontal = 1
+            }
+                
+            placements += "\(placement.id),\(placement.x),\(placement.y),\(isHorizontal)"
+        }
+        let result = "\(s),\(w),\(h)," + placements
         return result
     }
 }
